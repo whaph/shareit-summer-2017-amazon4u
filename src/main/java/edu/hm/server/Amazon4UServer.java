@@ -10,7 +10,7 @@ import java.net.Socket;
 /**
  * Created by jupiter on 4/19/17.
  */
-public class Server {
+public class Amazon4UServer {
     public static final int PORT = 8082;
 
     public void listen(int port) throws IOException {
@@ -43,7 +43,6 @@ public class Server {
                 toClient.write(response);
                 toClient.write("\r\n");
                 toClient.flush();
-
             }
         }
     }
