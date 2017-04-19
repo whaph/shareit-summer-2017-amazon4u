@@ -9,6 +9,8 @@ import edu.hm.media.Medium;
  */
 public class MediaServiceImplementation implements MediaService{
 
+
+
     @Override
     public MediaServiceResult addBook(Book book) {
         return null;
