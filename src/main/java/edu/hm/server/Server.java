@@ -7,7 +7,7 @@ import java.net.Socket;
 /**
  * Created by jupiter on 4/19/17.
  */
-public class server {
+public class Server {
     public static final int PORT = 8082;
 
 
