@@ -1,4 +1,5 @@
 package edu.hm.mediaService;
+import  edu.hm.REST.status.Status;
 
 /**
  * Representation of a MediaServiceResult
@@ -13,17 +14,6 @@ public enum MediaServiceResult {
 
     private final int code;
     private final Status status;
-
-    private class Status {
-        private final String status;
-        Status(String status){
-            this.status = status;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-    }
 
     MediaServiceResult(int code, Status status){
         this.code = code;
