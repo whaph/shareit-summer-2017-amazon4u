@@ -26,6 +26,7 @@ public class Server {
                 request += line;
             }
 
+            System.out.println(request);
             //TODO parse request
 
             String response = ""; // add response
