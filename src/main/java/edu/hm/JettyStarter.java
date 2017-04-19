@@ -1,7 +1,9 @@
 package edu.hm;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.webapp.*;
+
 
 /**
  * Start the application without an AppServer like tomcat.
@@ -26,5 +28,4 @@ public class JettyStarter {
         System.out.println("Jetty listening on port " + PORT);
         jetty.join();
     }
-
 }

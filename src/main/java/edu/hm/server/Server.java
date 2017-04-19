@@ -1,5 +1,8 @@
 package edu.hm.server;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,7 +12,6 @@ import java.net.Socket;
  */
 public class Server {
     public static final int PORT = 8082;
-
 
     public void listen(int port) throws IOException {
         ServerSocket servSock = new ServerSocket(port);
@@ -43,6 +45,15 @@ public class Server {
 
             }
         }
+    }
 
+    private <T> String objectToJSON(T object) throws JsonProcessingException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(object);
+    }
+
+    private <T> T JSONToObject(String JSONString, String className) throws Exception {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(JSONString, (Class<T>) Class.forName(className));
     }
 }
