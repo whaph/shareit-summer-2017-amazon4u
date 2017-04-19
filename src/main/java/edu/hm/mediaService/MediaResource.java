@@ -3,18 +3,13 @@ package edu.hm.mediaService;
 import edu.hm.media.Book;
 import edu.hm.media.Disc;
 import edu.hm.media.Medium;
-
-import java.util.ArrayList;
+import edu.hm.REST.response.Response;
 
 /**
  * Created by jupiter on 4/19/17.
  */
 public class MediaResource {
     private final MediaService mediaService = new MediaServiceImplementation();
-
-
-
-
 
     public Response createBook(Book book){
         MediaServiceResult msr = getMediaService().addBook(book);
@@ -54,18 +49,4 @@ public class MediaResource {
         return new Response(msr);
 
     }
-
-
-    private class Response {
-        private final MediaServiceResult msr;
-        Response(MediaServiceResult msr){
-            this.msr = msr;
-        }
-
-        public String getStatus() {
-            //TODO
-            return "To be implemented";
-        }
-    }
-
 }
