@@ -1,4 +1,4 @@
-package edu.hm.media;
+package edu.hm.shareit.media;
 
 /**
  * Created by jupiter on 4/19/17.
@@ -6,6 +6,10 @@ package edu.hm.media;
 public class Book extends Medium{
     private final String author;
     private final String isbn;
+
+    public Book() {
+        this("empty", "empty", "empty");
+    }
 
     public Book(String title, String author, String isbn) {
         super(title);

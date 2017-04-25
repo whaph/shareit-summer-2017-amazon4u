@@ -1,15 +1,7 @@
-package edu.hm;
+package edu.hm.shareit;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import edu.hm.server.Amazon4UServer;
 import org.eclipse.jetty.server.*;
-import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.webapp.*;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 
 /**
@@ -20,7 +12,7 @@ import java.io.IOException;
 public class JettyStarter {
 
     public static final String APP_URL = "/";
-    public static final int PORT = 8082;
+    public static final int PORT = 8080;
     public static final String WEBAPP_DIR = "./src/main/webapp/";
 
     /**

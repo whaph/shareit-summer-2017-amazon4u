@@ -1,4 +1,4 @@
-package edu.hm.REST.status;
+package edu.hm.shareit.REST.status;
 
 /**
  * Created by aykut on 19.04.2017.

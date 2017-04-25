@@ -1,4 +1,4 @@
-package edu.hm.media;
+package edu.hm.shareit.media;
 
 /**
  * Created by jupiter on 4/19/17.
@@ -7,6 +7,10 @@ public class Disc extends Medium{
     final String barcode;
     final String director;
     final int fsk;
+
+    public Disc() {
+        this("empty", "empty", "empty",0);
+    }
 
     public Disc(String title, String barcode, String director, int fsk) {
         super(title);

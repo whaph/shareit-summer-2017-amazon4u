@@ -10,30 +10,30 @@
  */
 var submitNewBook = function() {
 	var json = JSON.stringify({
-		title: $("input[name=title]").val(),
-		author: $("input[name=author]").val(),
-		isbn: $("input[name=isbn]").val()
+			title: $("input[name=title]").val(),
+			author: $("input[name=author]").val(),
+			isbn: $("input[name=isbn]").val()
 	});
 	var errorText = $("#errormessage");
-	$.ajax({
-		url: '/shareit/media/books/',
-		type:'POST',
-		contentType: 'application/json; charset=UTF-8',
-		data: json
-	})
-		.done( () => {
-		$("input[name=title]").val("");
-	$("input[name=author]").val("");
-	$("input[name=isbn]").val("");
-
-	errorText.removeClass("visible");
-	errorText.addClass("hidden");
-})
-	.fail((error) => {
-		errorText.addClass("visible");
-	errorText.text(error.responseJSON.detail);
-	errorText.removeClass("hidden");
-});
+    $.ajax({
+        url: '/shareit/media/books/',
+        type:'POST',
+        contentType: 'application/json; charset=UTF-8',
+        data: json
+        })
+        .done( () => {
+			$("input[name=title]").val("");
+			$("input[name=author]").val("");
+			$("input[name=isbn]").val("");
+        	
+        	errorText.removeClass("visible");
+        	errorText.addClass("hidden");
+        })
+        .fail((error) => {
+        	errorText.addClass("visible");
+        	errorText.text(error.responseJSON.detail);
+        	errorText.removeClass("hidden");
+        });
 }
 
 /**
@@ -41,15 +41,15 @@ var submitNewBook = function() {
  */
 var listBooks = function() {
 	$.ajax({
-		url: '/shareit/media/books',
-		type:'GET'
+        url: '/shareit/media/books',
+        type:'GET'
 	})
-		.done((data) => {
+	.done((data) => {
 		var template = "<table class='u-full-width'><tbody>{{#data}}<tr><td>{{title}}</td><td>{{author}}</td><td>{{isbn}}</td></tr>{{/data}}</tbody></table>";
-	Mustache.parse(template);
-	var output = Mustache.render(template, {data: data});
-	$("#content").html(output);
-});// no error handling
+		Mustache.parse(template);
+		var output = Mustache.render(template, {data: data});
+		$("#content").html(output);
+	});// no error handling
 }
 
 /**
@@ -57,10 +57,10 @@ var listBooks = function() {
  */
 var changeContent = function(content) {
 	$.ajax({
-		url: content,
-		type:'GET'
+        url: content,
+        type:'GET'
 	})
-		.done((data) => {
+	.done((data) => {
 		$("#content").html(data);
-});// no error handling
+	});// no error handling
 }

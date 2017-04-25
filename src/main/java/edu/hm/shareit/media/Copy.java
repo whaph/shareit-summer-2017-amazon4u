@@ -1,4 +1,4 @@
-package edu.hm.media;
+package edu.hm.shareit.media;
 
 /** An exemplar of a medium bound to an owner.
  *

@@ -1,4 +1,4 @@
-package edu.hm.server;
+package edu.hm.shareit.server;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

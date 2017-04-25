@@ -1,4 +1,4 @@
-package edu.hm.media;
+package edu.hm.shareit.media;
 
 /**
  * Created by jupiter on 4/19/17.

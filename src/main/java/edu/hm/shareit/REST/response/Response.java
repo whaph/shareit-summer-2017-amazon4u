@@ -1,6 +1,6 @@
-package edu.hm.REST.response;
+package edu.hm.shareit.REST.response;
 
-import edu.hm.mediaService.MediaServiceResult;
+import edu.hm.shareit.mediaService.MediaServiceResult;
 
 /**
  * Created by aykut on 19.04.2017.

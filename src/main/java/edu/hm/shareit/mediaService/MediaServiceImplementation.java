@@ -1,8 +1,8 @@
-package edu.hm.mediaService;
+package edu.hm.shareit.mediaService;
 
-import edu.hm.media.Book;
-import edu.hm.media.Disc;
-import edu.hm.media.Medium;
+import edu.hm.shareit.media.Book;
+import edu.hm.shareit.media.Disc;
+import edu.hm.shareit.media.Medium;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package edu.hm.mediaService;
+package edu.hm.shareit.mediaService;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
