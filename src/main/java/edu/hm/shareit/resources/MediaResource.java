@@ -29,9 +29,9 @@ public class MediaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBook(Book book){
-        System.out.println("hier");
+        System.out.println(book.getAuthor());
         MediaServiceResult msr = getMediaService().addBook(book);
-        return Response.ok().build();
+        return msr.getResponse();
     }
 
     public Response createDisc(Disc disc){

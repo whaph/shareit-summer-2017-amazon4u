@@ -7,21 +7,22 @@ import javax.ws.rs.core.Response.Status;
  * Containing information: Status and Code
  */
 public enum MediaServiceResult {
-    OK(Response.Status.OK,200),
-    BOOK_NOT_FOUND(Response.Status.NOT_FOUND,404),
-    NOT_A_MEDIUM(Status.BAD_REQUEST, 405);
+    OK(Response.Status.OK, Response.ok().build()),
+    NOT_FOUND(Response.Status.NOT_FOUND, Response.status(Status.NOT_FOUND).build()),
+    ALREADY_EXISTS(Status.CONFLICT, Response.status(Status.NOT_FOUND).build()),
+    FORBIDDEN(Status.FORBIDDEN, Response.status(Status.FORBIDDEN).build());
+
 
     private Response.Status status;
-    private int code;
+    private Response response;
 
-    MediaServiceResult(Status status, int code) {
+    MediaServiceResult(Status status, Response response) {
         this.status = status;
-        this.code = code;
+        this.response = response;
     }
 
-    public int getCode() {
-        return code;
+    public Response getResponse() {
+        return this.response;
     }
-
 
 }
