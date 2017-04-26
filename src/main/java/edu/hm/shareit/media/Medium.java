@@ -20,6 +20,7 @@ public abstract class Medium {
                 "title='" + title + '\'' +
                 '}';
     }
+
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);

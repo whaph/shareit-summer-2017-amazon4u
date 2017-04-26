@@ -47,7 +47,7 @@ public class Amazon4UServer {
         }
     }
 
-    private <T> String objectToJSON(T object) throws JsonProcessingException {
+    private String objectToJSON(Object object) throws JsonProcessingException {
         final ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(object);
     }

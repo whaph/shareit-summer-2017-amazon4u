@@ -14,6 +14,7 @@ var submitNewBook = function() {
 			author: $("input[name=author]").val(),
 			isbn: $("input[name=isbn]").val()
 	});
+
 	var errorText = $("#errormessage");
     $.ajax({
         url: '/shareit/media/books/',
