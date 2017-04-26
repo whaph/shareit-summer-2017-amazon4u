@@ -11,6 +11,7 @@ import edu.hm.shareit.mediaService.MediaServiceResult;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
 
 /**
  * Created by jupiter on 4/19/17.
@@ -48,12 +49,7 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks(){
         Medium[] books = getMediaService().getBooks();
-        System.out.println("Size " + books.length);
-        for(Medium m: books){
-            System.out.println("lel" + m.toString());
-        }
-        System.out.println("in getBooks");
-        System.out.println(convertToJson(books));
+
         return Response.ok().entity(convertToJson(books)).build();
     }
 
@@ -85,7 +81,7 @@ public class MediaResource {
 
     }
 
-    public String convertToJson(Medium[] media){
+    public String convertToJson(Object media){
         ObjectMapper mapper = new ObjectMapper();
         //mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {

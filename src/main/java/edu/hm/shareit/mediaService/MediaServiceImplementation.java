@@ -20,13 +20,15 @@ public class MediaServiceImplementation implements MediaService{
             return MediaServiceResult.FORBIDDEN;
 
         if(getBooksCollection().contains(book)){
-            System.out.println("Duplicate found");
+            System.out.println("MediaServiceResult >>> addBook() -> Duplicate found");
             return MediaServiceResult.ALREADY_EXISTS;
         }
+
         getBooksCollection().add(book);
-        System.out.println(getBooksCollection().size());
-        System.out.println("addedBook: ");
-        System.out.println(books.toArray(new Book[0])[0]);
+        System.out.println("MediaServiceResult >>> addBook() -> book has been added");
+        System.out.println("MediaServiceResult >>> addBook() -> current size "
+                + getBooksCollection().size());
+
         return MediaServiceResult.OK;
     }
 
@@ -35,8 +37,8 @@ public class MediaServiceImplementation implements MediaService{
         if(disc == null)
             return MediaServiceResult.FORBIDDEN;
 
-        if(!getDiscsCollection().contains(disc)){
-            return MediaServiceResult.OK;
+        if(getDiscsCollection().contains(disc)){
+            return MediaServiceResult.ALREADY_EXISTS;
         }
 
         getDiscsCollection().add(disc);
@@ -75,12 +77,12 @@ public class MediaServiceImplementation implements MediaService{
 
     @Override
     public Medium[] getBooks() {
-        return (Medium[]) getBooksCollection().toArray(new Medium[0]);
+        return getBooksCollection().toArray(new Medium[0]);
     }
 
     @Override
     public Medium[] getDiscs() {
-        return (Medium[]) getDiscsCollection().toArray(new Medium[0]);
+        return getDiscsCollection().toArray(new Medium[0]);
     }
 
     private Collection<Book> getBooksCollection(){
