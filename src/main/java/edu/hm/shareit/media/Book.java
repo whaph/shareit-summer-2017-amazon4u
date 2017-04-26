@@ -34,15 +34,12 @@ public class Book extends Medium{
 
         Book book = (Book) o;
 
-        if (!getAuthor().equals(book.getAuthor())) return false;
         return getIsbn().equals(book.getIsbn());
-
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + getAuthor().hashCode();
         result = 31 * result + getIsbn().hashCode();
         return result;
     }

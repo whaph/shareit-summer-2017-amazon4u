@@ -39,9 +39,7 @@ public class Disc extends Medium{
 
         Disc disc = (Disc) o;
 
-        if (getFsk() != disc.getFsk()) return false;
-        if (!getBarcode().equals(disc.getBarcode())) return false;
-        return getDirector().equals(disc.getDirector());
+        return getBarcode().equals(disc.getBarcode());
 
     }
 
@@ -49,8 +47,6 @@ public class Disc extends Medium{
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + getBarcode().hashCode();
-        result = 31 * result + getDirector().hashCode();
-        result = 31 * result + getFsk();
         return result;
     }
 }
