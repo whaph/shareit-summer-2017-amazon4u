@@ -86,7 +86,8 @@ public class MediaResource {
     public String convertToJson(Object object){
         ObjectMapper mapper = new ObjectMapper();
         try {
-
+            System.out.println("mapper: ");
+            System.out.println(mapper.writeValueAsString(object));
             return mapper.writeValueAsString(object);
         } catch (Exception e) {
             System.out.println("Error");
