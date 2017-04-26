@@ -6,6 +6,10 @@ package edu.hm.shareit.media;
 public abstract class Medium {
     private final String title;
 
+    private Medium() {
+        this.title = "These aren't the Droids you are looking for!";
+    }
+
     public Medium(String title) {
         this.title = title;
     }

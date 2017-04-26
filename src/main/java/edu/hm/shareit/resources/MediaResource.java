@@ -1,6 +1,7 @@
 package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
 import edu.hm.shareit.media.Medium;
@@ -85,9 +86,12 @@ public class MediaResource {
 
     public String convertToJson(Object object){
         ObjectMapper mapper = new ObjectMapper();
+        //mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             System.out.println("mapper: ");
             System.out.println(mapper.writeValueAsString(object));
+
+
             return mapper.writeValueAsString(object);
         } catch (Exception e) {
             System.out.println("Error");
