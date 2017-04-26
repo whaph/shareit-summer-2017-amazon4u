@@ -1,15 +1,27 @@
 package edu.hm.shareit.media;
 
 /**
- * Created by jupiter on 4/19/17.
+ * A Class for Discs.
  */
 public class Disc extends Medium{
-    private final String barcode;
-    private final String director;
-    private final int fsk;
+    /**
+     * Barcode of Disc.
+     */
+    final String barcode;
+    /**
+     * Director of Disc.
+     */
+    final String director;
+    /**
+     * Fsk of Disc.
+     */
+    final int fsk;
 
-    private Disc() {
-        this("empty", "empty", "empty",0);
+    /**
+     *  <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Click me</a>
+     */
+    public Disc() {
+        this("Never gonna", "give you", "up",0);
     }
 
     public Disc(String title, String barcode, String director, int fsk) {
@@ -40,7 +52,6 @@ public class Disc extends Medium{
         Disc disc = (Disc) o;
 
         return getBarcode().equals(disc.getBarcode());
-
     }
 
     @Override
