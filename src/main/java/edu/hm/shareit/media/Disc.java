@@ -18,7 +18,7 @@ public class Disc extends Medium{
     final int fsk;
 
     /**
-     * https://www.youtube.com/watch?v=oHg5SJYRHA0
+     *  <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Click me</a>
      */
     public Disc() {
         this("Never gonna", "give you", "up",0);
