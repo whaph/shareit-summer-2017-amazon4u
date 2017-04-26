@@ -75,7 +75,6 @@ public class MediaResource {
 
     }
 
-
     public Response updateDisc(Disc disc){
         MediaServiceResult msr = getMediaService().updateDisc(disc);
         return Response.ok().build();

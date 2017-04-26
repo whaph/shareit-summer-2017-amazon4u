@@ -4,52 +4,87 @@ import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
 import edu.hm.shareit.media.Medium;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Created by jupiter on 4/19/17.
  */
 public class MediaServiceImplementation implements MediaService{
-    final ArrayList<Book> books = new ArrayList<>();
-    final ArrayList<Disc> discs = new ArrayList<>();
-
-    private ArrayList<Book> getBookList(){
-        return this.books;
-    }
-    private ArrayList<Disc> getDiscList(){
-        return this.discs;
-    }
+    final Collection<Book> books = new HashSet<>();
+    final Collection<Disc> discs = new HashSet<>();
 
     @Override
     public MediaServiceResult addBook(Book book) {
         if(book == null)
-            return MediaServiceResult.NOT_A_MEDIUM;
-        getBookList().add(book);
+            return MediaServiceResult.FORBIDDEN;
+
+        if(!getBooksCollection().contains(book)){
+            return MediaServiceResult.OK;
+        }
+
+        getBooksCollection().add(book);
         return MediaServiceResult.OK;
     }
 
     @Override
     public MediaServiceResult addDisc(Disc disc) {
-        return null;
-    }
+        if(disc == null)
+            return MediaServiceResult.FORBIDDEN;
 
-    @Override
-    public Medium[] getBooks() {
-        return new Medium[0];
-    }
+        if(!getDiscsCollection().contains(disc)){
+            return MediaServiceResult.OK;
+        }
 
-    @Override
-    public Medium[] getDiscs() {
-        return new Medium[0];
+        getDiscsCollection().add(disc);
+        return MediaServiceResult.OK;
     }
 
     @Override
     public MediaServiceResult updateBook(Book book) {
-        return null;
+        if(book == null){
+            return MediaServiceResult.FORBIDDEN;
+        }
+        final boolean removed = getBooksCollection().remove(book);
+        if(removed){
+            addBook(book);
+            return MediaServiceResult.OK;
+        }
+        else {
+            return MediaServiceResult.NOT_FOUND;
+        }
     }
 
     @Override
     public MediaServiceResult updateDisc(Disc disc) {
-        return null;
+        if(disc == null){
+            return MediaServiceResult.FORBIDDEN;
+        }
+        final boolean removed = getDiscsCollection().remove(disc);
+        if(removed){
+            addDisc(disc);
+            return MediaServiceResult.OK;
+        }
+        else {
+            return MediaServiceResult.NOT_FOUND;
+        }
+    }
+
+    @Override
+    public Medium[] getBooks() {
+        return (Medium[]) getBooksCollection().stream().sorted().toArray();
+    }
+
+    @Override
+    public Medium[] getDiscs() {
+        return (Medium[]) getDiscsCollection().stream().sorted().toArray();
+    }
+
+    private Collection<Book> getBooksCollection(){
+        return this.books;
+    }
+
+    private Collection<Disc> getDiscsCollection(){
+        return this.discs;
     }
 }
