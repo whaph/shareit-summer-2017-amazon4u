@@ -35,9 +35,13 @@ public class MediaResource {
         return msr.getResponse();
     }
 
+    @POST
+    @Path("discs")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createDisc(Disc disc){
         MediaServiceResult msr = getMediaService().addDisc(disc);
-        return Response.ok().build();
+        return msr.getResponse();
     }
 
     private MediaService getMediaService(){
@@ -52,8 +56,6 @@ public class MediaResource {
 
         return Response.ok().entity(convertToJson(books)).build();
     }
-
-
 
     @GET
     @Path("discs")
@@ -72,28 +74,16 @@ public class MediaResource {
     public Response updateBook(Book book){
         MediaServiceResult msr = getMediaService().updateBook(book);
         return Response.ok().build();
-
     }
 
     public Response updateDisc(Disc disc){
         MediaServiceResult msr = getMediaService().updateDisc(disc);
         return Response.ok().build();
-
     }
 
     public String convertToJson(Object media){
         ObjectMapper mapper = new ObjectMapper();
-        //mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            System.out.println("mapper: ");
-            //System.out.println(mapper.writeValueAsString(object));
-            //String string = "";
-            //for(Medium m: media){
-            //    m = (Book)m;
-            //    string += mapper.writeValueAsString(m);
-            //}
-
-
             return mapper.writeValueAsString(media);
         } catch (Exception e) {
             System.out.println("Error");
