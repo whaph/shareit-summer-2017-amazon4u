@@ -7,20 +7,20 @@ public class Disc extends Medium{
     /**
      * Barcode of Disc.
      */
-    final String barcode;
+    private final String barcode;
     /**
      * Director of Disc.
      */
-    final String director;
+    private final String director;
     /**
      * Fsk of Disc.
      */
-    final int fsk;
+    private final int fsk;
 
     /**
      *  <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Click me</a>
      */
-    public Disc() {
+    private Disc() {
         this("Never gonna", "give you", "up",0);
     }
 

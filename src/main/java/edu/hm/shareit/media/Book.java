@@ -7,7 +7,7 @@ public class Book extends Medium{
     private final String author;
     private final String isbn;
 
-    public Book() {
+    private Book() {
         this("empty", "empty", "empty");
     }
 
