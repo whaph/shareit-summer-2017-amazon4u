@@ -1,7 +1,6 @@
 package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
 import edu.hm.shareit.media.Medium;
@@ -18,8 +17,7 @@ import javax.ws.rs.core.Response;
  */
 @Path("media")
 public class MediaResource {
-    private final MediaService mediaService = new MediaServiceImplementation();
-
+    private static final MediaService MEDIA_SERVICE = new MediaServiceImplementation();
 
     /**
      *
@@ -42,7 +40,7 @@ public class MediaResource {
     }
 
     private MediaService getMediaService(){
-        return this.mediaService;
+        return this.MEDIA_SERVICE;
     }
 
     @GET
@@ -50,6 +48,10 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks(){
         Medium[] books = getMediaService().getBooks();
+        System.out.println("Size " + books.length);
+        for(Medium m: books){
+            System.out.println("lel" + m.toString());
+        }
         System.out.println("in getBooks");
         System.out.println(convertToJson(books));
         return Response.ok().entity(convertToJson(books)).build();
@@ -83,15 +85,19 @@ public class MediaResource {
 
     }
 
-    public String convertToJson(Object object){
+    public String convertToJson(Medium[] media){
         ObjectMapper mapper = new ObjectMapper();
         //mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             System.out.println("mapper: ");
-            System.out.println(mapper.writeValueAsString(object));
-
-
-            return mapper.writeValueAsString(object);
+            //System.out.println(mapper.writeValueAsString(object));
+            String string = "";
+            for(Medium m: media){
+                m = (Book)m;
+                string += mapper.writeValueAsString(m);
+            }
+            System.out.println(string);
+            return string;
         } catch (Exception e) {
             System.out.println("Error");
             return "";
