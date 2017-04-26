@@ -45,7 +45,6 @@ public class MediaResource {
         return this.mediaService;
     }
 
-
     @GET
     @Path("books")
     @Produces(MediaType.APPLICATION_JSON)

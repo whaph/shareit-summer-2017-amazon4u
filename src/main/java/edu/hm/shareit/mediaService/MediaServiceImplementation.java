@@ -11,8 +11,8 @@ import java.util.HashSet;
  * Created by jupiter on 4/19/17.
  */
 public class MediaServiceImplementation implements MediaService{
-    final Collection<Book> books = new HashSet<>();
-    final Collection<Disc> discs = new HashSet<>();
+    private static final Collection<Book> books = new HashSet<>();
+    private static final Collection<Disc> discs = new HashSet<>();
 
     @Override
     public MediaServiceResult addBook(Book book) {
@@ -20,9 +20,11 @@ public class MediaServiceImplementation implements MediaService{
             return MediaServiceResult.FORBIDDEN;
 
         if(getBooksCollection().contains(book)){
+            System.out.println("Duplicate found");
             return MediaServiceResult.ALREADY_EXISTS;
         }
         getBooksCollection().add(book);
+        System.out.println(getBooksCollection().size());
         System.out.println("addedBook: ");
         System.out.println(books.toArray(new Book[0])[0]);
         return MediaServiceResult.OK;
