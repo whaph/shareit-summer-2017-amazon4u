@@ -91,13 +91,14 @@ public class MediaResource {
         try {
             System.out.println("mapper: ");
             //System.out.println(mapper.writeValueAsString(object));
-            String string = "";
-            for(Medium m: media){
-                m = (Book)m;
-                string += mapper.writeValueAsString(m);
-            }
-            System.out.println(string);
-            return string;
+            //String string = "";
+            //for(Medium m: media){
+            //    m = (Book)m;
+            //    string += mapper.writeValueAsString(m);
+            //}
+
+
+            return mapper.writeValueAsString(media);
         } catch (Exception e) {
             System.out.println("Error");
             return "";
