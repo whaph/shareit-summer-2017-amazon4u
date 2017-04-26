@@ -65,10 +65,6 @@ public class MediaServiceImplementation implements MediaService {
         return MediaServiceResult.OK;
     }
 
-    private boolean isValidBarcode(String barcode) {
-        return false;
-    }
-
     @Override
     public MediaServiceResult updateBook(Book book) {
         if (book == null) {
@@ -135,5 +131,9 @@ public class MediaServiceImplementation implements MediaService {
         }
 
         return checksum == Integer.parseInt(isbn.substring(12));
+    }
+
+    private boolean isValidBarcode(String barcode) {
+        return false;
     }
 }
