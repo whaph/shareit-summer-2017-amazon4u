@@ -48,20 +48,24 @@ public class MediaServiceImplementation implements MediaService {
             return MediaServiceResult.FORBIDDEN;
 
         if (disc.getDirector() == "" || disc.getTitle() == "") {
-            System.out.println("MediaServiceResult >>> addBook() -> director or title missing");
+            System.out.println("MediaServiceResult >>> addDisc() -> director or title missing");
             return MediaServiceResult.MISSING_ARG;
         }
 
         if (!isValidBarcode(disc.getBarcode())) {
-            System.out.println("MediaServiceResult >>> addBook() -> Illegal ISBN");
+            System.out.println("MediaServiceResult >>> addDisc() -> Illegal ISBN");
             return MediaServiceResult.ILLEGAL_ISBN;
         }
 
         if (getDiscsCollection().contains(disc)) {
+            System.out.println("MediaServiceResult >>> addDisc() -> Duplicate found");
             return MediaServiceResult.ALREADY_EXISTS;
         }
 
         getDiscsCollection().add(disc);
+        System.out.println("MediaServiceResult >>> addDisc() -> disc has been added");
+        System.out.println("MediaServiceResult >>> addDisc() -> current size "
+                + getDiscsCollection().size());
         return MediaServiceResult.OK;
     }
 
@@ -122,7 +126,8 @@ public class MediaServiceImplementation implements MediaService {
         int sum = 0;
         for (int index = 0; index < maxLength - 1; index++) {
             int digit = Integer.parseInt(isbn.substring(index, index + 1));
-            sum += (index % 2 == 0) ? digit : digit * 3;
+            if (index % 2 == 0) sum += digit;
+            else sum += digit * 3;
         }
 
         int checksum = 10 - (sum % 10);
@@ -134,6 +139,6 @@ public class MediaServiceImplementation implements MediaService {
     }
 
     private boolean isValidBarcode(String barcode) {
-        return false;
+        return isValidISBN(barcode);
     }
 }
