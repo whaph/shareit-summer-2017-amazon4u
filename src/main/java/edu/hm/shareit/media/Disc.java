@@ -4,11 +4,11 @@ package edu.hm.shareit.media;
  * Created by jupiter on 4/19/17.
  */
 public class Disc extends Medium{
-    final String barcode;
-    final String director;
-    final int fsk;
+    private final String barcode;
+    private final String director;
+    private final int fsk;
 
-    public Disc() {
+    private Disc() {
         this("empty", "empty", "empty",0);
     }
 
