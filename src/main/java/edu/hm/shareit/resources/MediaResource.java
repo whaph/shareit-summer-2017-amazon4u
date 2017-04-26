@@ -1,5 +1,6 @@
 package edu.hm.shareit.resources;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
 import edu.hm.shareit.media.Medium;
@@ -50,7 +51,8 @@ public class MediaResource {
     public Response getBooks(){
         Medium[] books = getMediaService().getBooks();
         System.out.println("in getBooks");
-        return Response.ok().build();
+        System.out.println(convertToJson(books));
+        return Response.ok().entity(convertToJson(books)).build();
     }
 
 
@@ -80,4 +82,16 @@ public class MediaResource {
         return Response.ok().build();
 
     }
+
+    public String convertToJson(Object object){
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+
+            return mapper.writeValueAsString(object);
+        } catch (Exception e) {
+            System.out.println("Error");
+            return "";
+        }
+    }
+
 }

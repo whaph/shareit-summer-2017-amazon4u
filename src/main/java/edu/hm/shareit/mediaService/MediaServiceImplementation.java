@@ -19,11 +19,12 @@ public class MediaServiceImplementation implements MediaService{
         if(book == null)
             return MediaServiceResult.FORBIDDEN;
 
-        if(!getBooksCollection().contains(book)){
-            return MediaServiceResult.OK;
+        if(getBooksCollection().contains(book)){
+            return MediaServiceResult.ALREADY_EXISTS;
         }
-
         getBooksCollection().add(book);
+        System.out.println("addedBook: ");
+        System.out.println(books.toArray(new Book[0])[0]);
         return MediaServiceResult.OK;
     }
 
@@ -72,12 +73,12 @@ public class MediaServiceImplementation implements MediaService{
 
     @Override
     public Medium[] getBooks() {
-        return (Medium[]) getBooksCollection().stream().sorted().toArray();
+        return (Medium[]) getBooksCollection().toArray(new Medium[0]);
     }
 
     @Override
     public Medium[] getDiscs() {
-        return (Medium[]) getDiscsCollection().stream().sorted().toArray();
+        return (Medium[]) getDiscsCollection().toArray(new Medium[0]);
     }
 
     private Collection<Book> getBooksCollection(){
