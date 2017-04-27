@@ -11,6 +11,7 @@ import edu.hm.shareit.mediaService.MediaServiceResult;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Arrays;
 
 /**
  * Created by jupiter on 4/19/17.
@@ -59,7 +60,10 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks() {
         final Medium[] books = getMediaService().getBooks();
-        return Response.ok().entity(books).build();
+        final Object[] sortedBooks = Arrays.stream(books)
+                .sorted((o1, o2) -> o1.getTitle().compareTo(o2.getTitle()))
+                .toArray();
+        return Response.ok().entity(convertToJson(sortedBooks)).build();
     }
 
     /**
@@ -88,7 +92,10 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscs() {
         final Medium[] discs = getMediaService().getDiscs();
-        return Response.ok().entity(discs).build();
+        final Object[] sortedDiscs = Arrays.stream(discs)
+                .sorted((o1, o2) -> o1.getTitle().compareTo(o2.getTitle()))
+                .toArray();
+        return Response.ok().entity(sortedDiscs).build();
     }
 
     /**
