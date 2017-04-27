@@ -38,10 +38,18 @@ public class Disc extends Medium {
         this.fsk = fsk;
     }
 
+    /** Setter for fks.
+     *
+     * @param fsk The fsk.
+     */
     public void setFsk(int fsk) {
         this.fsk = fsk;
     }
 
+    /** Setter for director.
+     *
+     * @param director The director
+     */
     public void setDirector(String director) {
         this.director = director;
     }

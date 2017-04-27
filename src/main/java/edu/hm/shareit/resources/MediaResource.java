@@ -59,7 +59,7 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks() {
         final Medium[] books = getMediaService().getBooks();
-        return Response.ok().entity(convertToJson(books)).build();
+        return Response.ok().entity(books).build();
     }
 
     /**
@@ -74,11 +74,12 @@ public class MediaResource {
     public Response getBook(@PathParam("isbn") String isbn) {
         final Medium book = getMediaService().getBook(isbn);
         return book != null
-                ? Response.ok().entity(convertToJson(book)).build()
+                ? Response.ok().entity(book).build()
                 : MediaServiceResult.NOT_FOUND.getResponse();
     }
 
-    /** Getter for all discs.
+    /**
+     * Getter for all discs.
      *
      * @return The discs
      */
@@ -87,10 +88,11 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscs() {
         final Medium[] discs = getMediaService().getDiscs();
-        return Response.ok().entity(convertToJson(discs)).build();
+        return Response.ok().entity(discs).build();
     }
 
-    /** Getter for one disc.
+    /**
+     * Getter for one disc.
      *
      * @param barcode Used to identify the disc
      * @return The disc
@@ -101,11 +103,12 @@ public class MediaResource {
     public Response getDisc(@PathParam("barcode") String barcode) {
         final Medium disc = getMediaService().getBook(barcode);
         return disc != null
-                ? Response.ok().entity(convertToJson(disc)).build()
+                ? Response.ok().entity(disc).build()
                 : MediaServiceResult.NOT_FOUND.getResponse();
     }
 
-    /** Update a book.
+    /**
+     * Update a book.
      *
      * @param book The book-update
      * @param isbn Used to identify the book
@@ -119,13 +122,14 @@ public class MediaResource {
         System.out.println("MediaResource >>> updateBook >> ISBN: " + isbn);
         System.out.println("MediaResource >>> new Author and title: " + book.getAuthor() + " " + book.getTitle());
         MediaServiceResult msr = getMediaService()
-                .updateBook(new Book(book.getTitle(),book.getAuthor(),isbn));
+                .updateBook(new Book(book.getTitle(), book.getAuthor(), isbn));
         return msr.getResponse();
     }
 
-    /** Update a disc.
+    /**
+     * Update a disc.
      *
-     * @param disc The disc-update
+     * @param disc    The disc-update
      * @param barcode Used to identify the disc
      * @return Response success, failure, ...
      */
@@ -137,20 +141,20 @@ public class MediaResource {
         System.out.println("MediaResource >>> updateDisc >> Barcode: " + barcode);
         System.out.println("MediaResource >>> new Director, Fsk and title: " + disc.getDirector() + disc.getFsk() + disc.getTitle());
         MediaServiceResult msr = getMediaService()
-                .updateDisc(new Disc(disc.getTitle(),barcode,disc.getDirector(),disc.getFsk()));
+                .updateDisc(new Disc(disc.getTitle(), barcode, disc.getDirector(), disc.getFsk()));
         return msr.getResponse();
     }
 
     /**
      * Converts an object into JSON-format.
      *
-     * @param media object that shall be converted
+     * @param object object that shall be converted
      * @return JSON representation of the object
      */
-    public String convertToJson(Object media) {
+    private String convertToJson(Object object) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.writeValueAsString(media);
+            return mapper.writeValueAsString(object);
         } catch (Exception e) {
             System.out.println("Error");
             return "";
@@ -159,6 +163,7 @@ public class MediaResource {
 
     /**
      * Getter for the mediaService.
+     *
      * @return mediaSerive
      */
     private MediaService getMediaService() {

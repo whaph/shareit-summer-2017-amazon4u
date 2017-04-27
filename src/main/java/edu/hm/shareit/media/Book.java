@@ -28,6 +28,10 @@ public class Book extends Medium {
         this.isbn = isbn;
     }
 
+    /** Setter for author.
+     *
+     * @param author The author
+     */
     public void setAuthor(String author) {
         this.author = author;
     }

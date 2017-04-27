@@ -6,46 +6,46 @@ import edu.hm.shareit.media.Disc;
 import edu.hm.shareit.media.Medium;
 
 /**
- * A MediaService interface for Books and Discs
+ * A MediaService interface for Books and Discs.
  */
 public interface MediaService {
 
     /**
      * Add a new Book with Author Title and an unique ISBN to the Books-list.
-     * @param book
+     * @param book The book to add
      * @return MediaServiceResult, whether the book was added successfully
      */
     MediaServiceResult addBook(Book book);
 
     /**
      * Add a new Disc with Director, Title, Fsk and a unique Barcode to the Discs-list.
-     * @param disc
+     * @param disc The disc to add
      * @return MediaServiceResult, whether the disc was added successfully
      */
     MediaServiceResult addDisc(Disc disc);
 
     /**
      * Get a Medium array that contains all books.
-     * @return books
+     * @return books The books
      */
     Medium[] getBooks();
 
     /**
      * Get a Medium array that contains all discs.
-     * @return discs
+     * @return discs The discs
      */
     Medium[] getDiscs();
 
     /**
      * Update Author and/or Title of a book with given ISBN. ISBN cannot be changed.
-     * @param book
+     * @param book The book that has to be updated
      * @return whether the book was updated successfully
      */
     MediaServiceResult updateBook(Book book);
 
     /**
      * Update Director, Fsk and/or Title of a book with given Barcode.
-     * @param disc
+     * @param disc The disc that has to be updated
      * @return whether the disc was updated successfully
      */
     MediaServiceResult updateDisc(Disc disc);
