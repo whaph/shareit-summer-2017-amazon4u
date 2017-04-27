@@ -53,7 +53,6 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks(){
         Medium[] books = getMediaService().getBooks();
-
         return Response.ok().entity(convertToJson(books)).build();
     }
 
