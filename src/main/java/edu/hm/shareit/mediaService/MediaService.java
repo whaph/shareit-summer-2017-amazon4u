@@ -37,7 +37,7 @@ public interface MediaService {
     Medium[] getDiscs();
 
     /**
-     * Update Author and/or Title of a book with given ISBN.
+     * Update Author and/or Title of a book with given ISBN. ISBN cannot be changed.
      * @param book
      * @return whether the book was updated successfully
      */
@@ -50,4 +50,17 @@ public interface MediaService {
      */
     MediaServiceResult updateDisc(Disc disc);
 
+    /** Get a Medium which is a book matching with the isbn.
+     *
+     * @param isbn The book that shall be returned
+     * @return The requested book or null if not found.
+     */
+    Medium getBook(String isbn);
+
+    /** Get a Medium which is a disc matching with the barcode.
+     *
+     * @param barcode The disc that shall be returned
+     * @return The requested disc or null if not found.
+     */
+    Medium getDisc(String barcode);
 }

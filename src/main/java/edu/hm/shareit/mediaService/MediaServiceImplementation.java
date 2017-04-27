@@ -6,6 +6,7 @@ import edu.hm.shareit.media.Medium;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.stream.Stream;
 
 /**
  * Created by jupiter on 4/19/17.
@@ -48,24 +49,20 @@ public class MediaServiceImplementation implements MediaService {
             return MediaServiceResult.FORBIDDEN;
 
         if (disc.getDirector() == "" || disc.getTitle() == "") {
-            System.out.println("MediaServiceResult >>> addDisc() -> director or title missing");
+            System.out.println("MediaServiceResult >>> addBook() -> director or title missing");
             return MediaServiceResult.MISSING_ARG;
         }
 
         if (!isValidBarcode(disc.getBarcode())) {
-            System.out.println("MediaServiceResult >>> addDisc() -> Illegal ISBN");
+            System.out.println("MediaServiceResult >>> addBook() -> Illegal ISBN");
             return MediaServiceResult.ILLEGAL_ISBN;
         }
 
         if (getDiscsCollection().contains(disc)) {
-            System.out.println("MediaServiceResult >>> addDisc() -> Duplicate found");
             return MediaServiceResult.ALREADY_EXISTS;
         }
 
         getDiscsCollection().add(disc);
-        System.out.println("MediaServiceResult >>> addDisc() -> disc has been added");
-        System.out.println("MediaServiceResult >>> addDisc() -> current size "
-                + getDiscsCollection().size());
         return MediaServiceResult.OK;
     }
 
@@ -74,13 +71,14 @@ public class MediaServiceImplementation implements MediaService {
         if (book == null) {
             return MediaServiceResult.FORBIDDEN;
         }
-        final boolean removed = getBooksCollection().remove(book);
-        if (removed) {
-            addBook(book);
-            return MediaServiceResult.OK;
-        } else {
-            return MediaServiceResult.NOT_FOUND;
+        Book toBeUpdated = (Book)getBook(book.getIsbn());
+
+        if(toBeUpdated == null){
+            return MediaServiceResult.UNMATCHING_ISBN;
         }
+        toBeUpdated.setAuthor(book.getAuthor());
+        toBeUpdated.setTitle(book.getTitle());
+        return MediaServiceResult.OK;
     }
 
     @Override
@@ -88,13 +86,15 @@ public class MediaServiceImplementation implements MediaService {
         if (disc == null) {
             return MediaServiceResult.FORBIDDEN;
         }
-        final boolean removed = getDiscsCollection().remove(disc);
-        if (removed) {
-            addDisc(disc);
-            return MediaServiceResult.OK;
-        } else {
-            return MediaServiceResult.NOT_FOUND;
+        Disc toBeUpdated = (Disc)getDisc(disc.getBarcode());
+
+        if(toBeUpdated == null){
+            return MediaServiceResult.UNMATCHING_ISBN;
         }
+        toBeUpdated.setTitle(disc.getTitle());
+        toBeUpdated.setDirector(disc.getDirector());
+        toBeUpdated.setFsk(disc.getFsk());
+        return MediaServiceResult.OK;
     }
 
     @Override
@@ -107,12 +107,30 @@ public class MediaServiceImplementation implements MediaService {
         return getDiscsCollection().toArray(new Medium[0]);
     }
 
+    @Override
+    public Medium getBook(String isbn) {
+        for(Book book: getBooksCollection()){
+            if(book.getIsbn().equals(isbn))
+                return book;
+        }
+        return null;
+    }
+
+    @Override
+    public Medium getDisc(String barcode){
+        for(Disc disc: getDiscsCollection()){
+            if(disc.getBarcode().equals(barcode))
+                return disc;
+        }
+        return null;
+    }
+
     private Collection<Book> getBooksCollection() {
-        return this.books;
+        return books;
     }
 
     private Collection<Disc> getDiscsCollection() {
-        return this.discs;
+        return discs;
     }
 
     private boolean isValidISBN(String isbn) {
@@ -126,8 +144,7 @@ public class MediaServiceImplementation implements MediaService {
         int sum = 0;
         for (int index = 0; index < maxLength - 1; index++) {
             int digit = Integer.parseInt(isbn.substring(index, index + 1));
-            if (index % 2 == 0) sum += digit;
-            else sum += digit * 3;
+            sum += (index % 2 == 0) ? digit : digit * 3;
         }
 
         int checksum = 10 - (sum % 10);
@@ -139,6 +156,6 @@ public class MediaServiceImplementation implements MediaService {
     }
 
     private boolean isValidBarcode(String barcode) {
-        return isValidISBN(barcode);
+        return barcode.length() == 13 && barcode.matches("[0-9]+");
     }
 }
