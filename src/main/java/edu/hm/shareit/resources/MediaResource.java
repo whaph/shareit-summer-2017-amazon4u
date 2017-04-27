@@ -20,18 +20,12 @@ import java.util.Arrays;
 public class MediaResource {
     private static final MediaService MEDIA_SERVICE = new MediaServiceImplementation();
 
-    /**
-     *
-     * @param book
-     * @return
-     */
     @POST
     @Path("books")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createBook(Book book){
-        System.out.println(book.getAuthor());
-        MediaServiceResult msr = getMediaService().addBook(book);
+        final MediaServiceResult msr = getMediaService().addBook(book);
         return msr.getResponse();
     }
 
@@ -40,20 +34,15 @@ public class MediaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createDisc(Disc disc){
-        MediaServiceResult msr = getMediaService().addDisc(disc);
+        final MediaServiceResult msr = getMediaService().addDisc(disc);
         return msr.getResponse();
-    }
-
-    private MediaService getMediaService(){
-        return this.MEDIA_SERVICE;
     }
 
     @GET
     @Path("books")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks(){
-        Medium[] books = getMediaService().getBooks();
-
+        final Medium[] books = getMediaService().getBooks();
         return Response.ok().entity(convertToJson(books)).build();
     }
 
@@ -61,26 +50,36 @@ public class MediaResource {
     @Path("discs")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscs(){
-        Medium[] books = getMediaService().getDiscs();
-        //TODO
-        return Response.ok().build();
+        final Medium[] discs = getMediaService().getDiscs();
+        return Response.ok().entity(convertToJson(discs)).build();
     }
 
 
     @PUT
-    @Path("books/{mediaId}")
+    @Path("books/{isbn}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateBook(Book book){
+    public Response updateBook(Book book, @PathParam("isbn")String isbn){
+        // TODO - update the book correctly please
         MediaServiceResult msr = getMediaService().updateBook(book);
         return Response.ok().build();
     }
 
-    public Response updateDisc(Disc disc){
+    @PUT
+    @Path("discs/{barcode}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateDisc(Disc disc, @PathParam("barcode")String barcode){
+        // TODO - update the disc correctly please
         MediaServiceResult msr = getMediaService().updateDisc(disc);
         return Response.ok().build();
     }
 
+    /** Converts an object into JSON-format
+     *
+     * @param media object that shall be converted
+     * @return JSON representation of the object
+     */
     public String convertToJson(Object media){
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -91,4 +90,7 @@ public class MediaResource {
         }
     }
 
+    private MediaService getMediaService(){
+        return MEDIA_SERVICE;
+    }
 }

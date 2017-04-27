@@ -104,11 +104,11 @@ public class MediaServiceImplementation implements MediaService {
     }
 
     private Collection<Book> getBooksCollection() {
-        return this.books;
+        return books;
     }
 
     private Collection<Disc> getDiscsCollection() {
-        return this.discs;
+        return discs;
     }
 
     private boolean isValidISBN(String isbn) {
@@ -134,6 +134,6 @@ public class MediaServiceImplementation implements MediaService {
     }
 
     private boolean isValidBarcode(String barcode) {
-        return false;
+        return barcode.length() == 13 && barcode.matches("[0-9]+");
     }
 }
