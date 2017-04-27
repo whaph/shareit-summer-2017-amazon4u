@@ -6,6 +6,7 @@ import edu.hm.shareit.media.Medium;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.stream.Stream;
 
 /**
  * Created by jupiter on 4/19/17.
@@ -103,12 +104,36 @@ public class MediaServiceImplementation implements MediaService {
         return getDiscsCollection().toArray(new Medium[0]);
     }
 
+    @Override
+    public Medium getBook(String isbn) {
+        if(getBooksCollection().contains(isbn)){
+            final Stream<Book> foundBook =
+            getBooksCollection()
+                    .parallelStream()
+                    .filter(book -> book.getIsbn().equals(isbn));
+            return foundBook.findFirst().get();
+        }
+        return null;
+    }
+
+    @Override
+    public Medium getDisc(String barcode){
+        if(getDiscsCollection().contains(barcode)){
+            final Stream<Disc> foundDisc =
+                    getDiscsCollection()
+                            .parallelStream()
+                            .filter(disc -> disc.getBarcode().equals(barcode));
+            return foundDisc.findFirst().get();
+        }
+        return null;
+    }
+
     private Collection<Book> getBooksCollection() {
-        return this.books;
+        return books;
     }
 
     private Collection<Disc> getDiscsCollection() {
-        return this.discs;
+        return discs;
     }
 
     private boolean isValidISBN(String isbn) {
@@ -134,6 +159,6 @@ public class MediaServiceImplementation implements MediaService {
     }
 
     private boolean isValidBarcode(String barcode) {
-        return false;
+        return barcode.length() == 13 && barcode.matches("[0-9]+");
     }
 }

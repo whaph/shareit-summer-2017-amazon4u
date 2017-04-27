@@ -3,7 +3,7 @@ package edu.hm.shareit.media;
 /**
  * A Class for Discs.
  */
-public class Disc extends Medium{
+public class Disc extends Medium {
     /**
      * Barcode of Disc.
      */
@@ -21,9 +21,16 @@ public class Disc extends Medium{
      *  <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Click me</a>
      */
     private Disc() {
-        this("Never gonna", "give you", "up",0);
+        this("Never gonna", "give you", "up", 0);
     }
 
+    /** Creates a representation of a disc.
+     * Not to be mistaken as an exemplar of the disc.
+     * @param title Title of the disc
+     * @param barcode Barcode of the disc
+     * @param director Director of the disc
+     * @param fsk FSK of the disc
+     */
     public Disc(String title, String barcode, String director, int fsk) {
         super(title);
         this.barcode = barcode;
@@ -31,23 +38,38 @@ public class Disc extends Medium{
         this.fsk = fsk;
     }
 
-    public String getBarcode(){
+    /** Getter for barcode.
+     * @return barcode
+     */
+    public String getBarcode() {
         return this.barcode;
     }
 
+    /** Getter for director.
+     * @return director
+     */
     public String getDirector() {
         return director;
     }
 
+    /** Getter for fsk.
+     * @return fsk
+     */
     public int getFsk() {
         return fsk;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         Disc disc = (Disc) o;
 
