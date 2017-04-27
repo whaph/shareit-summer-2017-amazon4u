@@ -50,4 +50,17 @@ public interface MediaService {
      */
     MediaServiceResult updateDisc(Disc disc);
 
+    /** Get a Medium which is a book matching with the isbn.
+     *
+     * @param isbn The book that shall be returned
+     * @return The requested book or null if not found.
+     */
+    Medium getBook(String isbn);
+
+    /** Get a Medium which is a disc matching with the barcode.
+     *
+     * @param barcode The disc that shall be returned
+     * @return The requested disc or null if not found.
+     */
+    Medium getDisc(String barcode);
 }

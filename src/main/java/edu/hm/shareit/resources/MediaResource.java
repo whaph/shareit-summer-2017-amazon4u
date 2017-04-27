@@ -47,11 +47,32 @@ public class MediaResource {
     }
 
     @GET
+    @Path("books/{isbn}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBook(@PathParam("isbn")String isbn){
+        final Medium book = getMediaService().getBook(isbn);
+        return book != null
+                ? Response.ok().entity(convertToJson(book)).build()
+                : MediaServiceResult.NOT_FOUND.getResponse();
+    }
+
+    @GET
     @Path("discs")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDiscs(){
         final Medium[] discs = getMediaService().getDiscs();
         return Response.ok().entity(convertToJson(discs)).build();
+    }
+
+
+    @GET
+    @Path("discs/{barcode}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDisc(@PathParam("barcode")String barcode){
+        final Medium disc = getMediaService().getBook(barcode);
+        return disc != null
+                ? Response.ok().entity(convertToJson(disc)).build()
+                : MediaServiceResult.NOT_FOUND.getResponse();
     }
 
 
