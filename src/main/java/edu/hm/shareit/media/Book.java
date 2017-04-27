@@ -4,7 +4,7 @@ package edu.hm.shareit.media;
  * Created by jupiter on 4/19/17.
  */
 public class Book extends Medium {
-    private final String author;
+    private String author;
     private final String isbn;
 
     /**
@@ -26,6 +26,10 @@ public class Book extends Medium {
         super(title);
         this.author = author;
         this.isbn = isbn;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     /**

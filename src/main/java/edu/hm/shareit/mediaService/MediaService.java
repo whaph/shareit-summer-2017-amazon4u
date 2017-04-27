@@ -37,7 +37,7 @@ public interface MediaService {
     Medium[] getDiscs();
 
     /**
-     * Update Author and/or Title of a book with given ISBN.
+     * Update Author and/or Title of a book with given ISBN. ISBN cannot be changed.
      * @param book
      * @return whether the book was updated successfully
      */

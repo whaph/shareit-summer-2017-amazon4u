@@ -8,7 +8,7 @@ public abstract class Medium {
     /**
      * Title of the medium.
      */
-    private final String title;
+    private String title;
 
     private Medium() {
         this.title = "These aren't the Droids you are looking for!";
@@ -20,6 +20,10 @@ public abstract class Medium {
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override

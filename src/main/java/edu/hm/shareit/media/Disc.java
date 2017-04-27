@@ -11,11 +11,11 @@ public class Disc extends Medium {
     /**
      * Director of Disc.
      */
-    private final String director;
+    private String director;
     /**
      * Fsk of Disc.
      */
-    private final int fsk;
+    private int fsk;
 
     /**
      *  <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Click me</a>
@@ -36,6 +36,14 @@ public class Disc extends Medium {
         this.barcode = barcode;
         this.director = director;
         this.fsk = fsk;
+    }
+
+    public void setFsk(int fsk) {
+        this.fsk = fsk;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
     }
 
     /** Getter for barcode.

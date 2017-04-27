@@ -71,13 +71,14 @@ public class MediaServiceImplementation implements MediaService {
         if (book == null) {
             return MediaServiceResult.FORBIDDEN;
         }
-        final boolean removed = getBooksCollection().remove(book);
-        if (removed) {
-            addBook(book);
-            return MediaServiceResult.OK;
-        } else {
-            return MediaServiceResult.NOT_FOUND;
+        Book toBeUpdated = (Book)getBook(book.getIsbn());
+
+        if(toBeUpdated == null){
+            return MediaServiceResult.UNMATCHING_ISBN;
         }
+        toBeUpdated.setAuthor(book.getAuthor());
+        toBeUpdated.setTitle(book.getTitle());
+        return MediaServiceResult.OK;
     }
 
     @Override
@@ -85,13 +86,15 @@ public class MediaServiceImplementation implements MediaService {
         if (disc == null) {
             return MediaServiceResult.FORBIDDEN;
         }
-        final boolean removed = getDiscsCollection().remove(disc);
-        if (removed) {
-            addDisc(disc);
-            return MediaServiceResult.OK;
-        } else {
-            return MediaServiceResult.NOT_FOUND;
+        Disc toBeUpdated = (Disc)getDisc(disc.getBarcode());
+
+        if(toBeUpdated == null){
+            return MediaServiceResult.UNMATCHING_ISBN;
         }
+        toBeUpdated.setTitle(disc.getTitle());
+        toBeUpdated.setDirector(disc.getDirector());
+        toBeUpdated.setFsk(disc.getFsk());
+        return MediaServiceResult.OK;
     }
 
     @Override
@@ -106,24 +109,18 @@ public class MediaServiceImplementation implements MediaService {
 
     @Override
     public Medium getBook(String isbn) {
-        if(getBooksCollection().contains(isbn)){
-            final Stream<Book> foundBook =
-            getBooksCollection()
-                    .parallelStream()
-                    .filter(book -> book.getIsbn().equals(isbn));
-            return foundBook.findFirst().get();
+        for(Book book: getBooksCollection()){
+            if(book.getIsbn().equals(isbn))
+                return book;
         }
         return null;
     }
 
     @Override
     public Medium getDisc(String barcode){
-        if(getDiscsCollection().contains(barcode)){
-            final Stream<Disc> foundDisc =
-                    getDiscsCollection()
-                            .parallelStream()
-                            .filter(disc -> disc.getBarcode().equals(barcode));
-            return foundDisc.findFirst().get();
+        for(Disc disc: getDiscsCollection()){
+            if(disc.getBarcode().equals(barcode))
+                return disc;
         }
         return null;
     }

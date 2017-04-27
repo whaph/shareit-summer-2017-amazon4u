@@ -116,9 +116,11 @@ public class MediaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateBook(Book book, @PathParam("isbn") String isbn) {
-        // TODO - update the book correctly please
-        MediaServiceResult msr = getMediaService().updateBook(book);
-        return Response.ok().build();
+        System.out.println("MediaResource >>> updateBook >> ISBN: " + isbn);
+        System.out.println("MediaResource >>> new Author and title: " + book.getAuthor() + " " + book.getTitle());
+        MediaServiceResult msr = getMediaService()
+                .updateBook(new Book(book.getTitle(),book.getAuthor(),isbn));
+        return msr.getResponse();
     }
 
     /** Update a disc.
@@ -132,9 +134,11 @@ public class MediaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateDisc(Disc disc, @PathParam("barcode") String barcode) {
-        // TODO - update the disc correctly please
-        MediaServiceResult msr = getMediaService().updateDisc(disc);
-        return Response.ok().build();
+        System.out.println("MediaResource >>> updateDisc >> Barcode: " + barcode);
+        System.out.println("MediaResource >>> new Director, Fsk and title: " + disc.getDirector() + disc.getFsk() + disc.getTitle());
+        MediaServiceResult msr = getMediaService()
+                .updateDisc(new Disc(disc.getTitle(),barcode,disc.getDirector(),disc.getFsk()));
+        return msr.getResponse();
     }
 
     /**
