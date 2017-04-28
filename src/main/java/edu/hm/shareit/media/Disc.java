@@ -83,9 +83,6 @@ public class Disc extends Medium {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
 
         Disc disc = (Disc) o;
 
@@ -94,8 +91,6 @@ public class Disc extends Medium {
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + getBarcode().hashCode();
-        return result;
+        return getBarcode().hashCode();
     }
 }

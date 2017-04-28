@@ -71,8 +71,6 @@ public class Book extends Medium {
 
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + getIsbn().hashCode();
-        return result;
+        return getIsbn().hashCode();
     }
 }
