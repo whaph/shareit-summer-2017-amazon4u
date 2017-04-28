@@ -22,7 +22,7 @@ public class MediaResource {
 
     /**
      * Creates a book (not an exemplar).
-     *
+     * REST interface: POST /media/books
      * @param book The book
      * @return Response success, failure, ...
      */
@@ -37,7 +37,7 @@ public class MediaResource {
 
     /**
      * Creates a disc (not an exemplar).
-     *
+     * REST interface: POST /media/discs
      * @param disc The disc
      * @return Response success, failure, ...
      */
@@ -51,8 +51,8 @@ public class MediaResource {
     }
 
     /**
-     * Getter for all books.
-     *
+     * Show all books.
+     * REST interface: GET /media/books
      * @return The books
      */
     @GET
@@ -67,8 +67,8 @@ public class MediaResource {
     }
 
     /**
-     * Getter for one book.
-     *
+     * Show the book having the isbn.
+     * REST interface: GET /media/books/{isbn}
      * @param isbn Used to identify the book
      * @return The book
      */
@@ -84,8 +84,8 @@ public class MediaResource {
     }
 
     /**
-     * Getter for all discs.
-     *
+     * Show all discs.
+     * REST interface: GET /media/discs/
      * @return The discs
      */
     @GET
@@ -100,8 +100,8 @@ public class MediaResource {
     }
 
     /**
-     * Getter for one disc.
-     *
+     * Show the disc having the barcode.
+     * REST interface: GET /media/discs/{barcode}
      * @param barcode Used to identify the disc
      * @return The disc
      */
@@ -116,8 +116,8 @@ public class MediaResource {
     }
 
     /**
-     * Update a book.
-     *
+     * Update a the book having the isbn.
+     * REST interface: PUT /media/books/{isbn}
      * @param book The book-update
      * @param isbn Used to identify the book
      * @return Response success, failure, ...
@@ -135,8 +135,8 @@ public class MediaResource {
     }
 
     /**
-     * Update a disc.
-     *
+     * Update the disc having the barcode.
+     * REST interface: PUT /media/discs/{barcode}
      * @param disc    The disc-update
      * @param barcode Used to identify the disc
      * @return Response success, failure, ...
