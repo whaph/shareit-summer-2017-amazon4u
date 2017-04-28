@@ -33,6 +33,8 @@ public class Disc extends Medium {
      */
     public Disc(String title, String barcode, String director, int fsk) {
         super(title);
+        if(barcode == null || director == null)
+            throw new NullPointerException();
         this.barcode = barcode;
         this.director = director;
         this.fsk = fsk;

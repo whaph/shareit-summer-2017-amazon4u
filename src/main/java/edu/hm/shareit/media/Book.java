@@ -24,6 +24,8 @@ public class Book extends Medium {
      */
     public Book(String title, String author, String isbn) {
         super(title);
+        if(author == null || isbn == null)
+            throw new NullPointerException();
         this.author = author;
         this.isbn = isbn;
     }
