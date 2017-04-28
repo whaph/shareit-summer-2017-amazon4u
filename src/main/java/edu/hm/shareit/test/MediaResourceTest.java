@@ -1,35 +1,25 @@
 package edu.hm.shareit.test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.deploy.net.URLEncoder;
-import edu.hm.shareit.JettyStarter;
+
 import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
-import edu.hm.shareit.mediaService.MediaService;
-import edu.hm.shareit.mediaService.MediaServiceResult;
-import edu.hm.shareit.resources.MediaResource;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.glassfish.jersey.client.JerseyClient;
-import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import sun.net.www.http.HttpClient;
+
 
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 
 import static org.junit.Assert.*;
 
@@ -45,7 +35,8 @@ public class MediaResourceTest {
     static final String WEBAPP_DIR = "./src/main/webapp/";
     static final Server jetty = new Server(PORT);
     static final JSONObject BOOK_JSON = new JSONObject();
-
+    static final Client CLIENT = ClientBuilder.newClient();
+    static final WebTarget BOOK_TARGET = CLIENT.target("http://localhost:8082").path("shareit/media/books");
 
     @Before
     public void setUp() throws Exception {
@@ -66,18 +57,21 @@ public class MediaResourceTest {
 
 
     @Test
-    public void createBook() throws Exception {
-        JerseyClient jc = JerseyClientBuilder.createClient();
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8082").path("shareit/media/books");
-
-        Form form = new Form();
-        form.param("x", "foo");
-        form.param("y", "bar");
-        target.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(BOOK,MediaType.APPLICATION_JSON_TYPE));
-        System.out.println("asdf");
+    public void createBookStatus() throws Exception {
+        Response want = Response.ok().build();
+        Response have = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(BOOK,MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(want.getStatus(),have.getStatus());
     }
-/*
+
+    @Test
+    public void getBooks() throws Exception {
+        Response want = Response.ok().entity(BOOK).build();
+        Response have = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(BOOK,MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(want.getStatus(),have.getStatus());
+    }
+
+
+    /*
     //@Test
     public void createDisc() throws Exception {
         MediaResource mediaResource = new MediaResource();
