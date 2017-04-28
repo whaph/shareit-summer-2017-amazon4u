@@ -56,7 +56,7 @@ public class MediaResourceTest {
         jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
         jetty.start();
         System.out.println("Jetty listening on port " + PORT);
-        jetty.join();
+        //jetty.join();
     }
 
     @After
@@ -74,10 +74,10 @@ public class MediaResourceTest {
         Form form = new Form();
         form.param("x", "foo");
         form.param("y", "bar");
-        target.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(JSONObject));
-
+        target.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(BOOK,MediaType.APPLICATION_JSON_TYPE));
+        System.out.println("asdf");
     }
-
+/*
     //@Test
     public void createDisc() throws Exception {
         MediaResource mediaResource = new MediaResource();
@@ -128,5 +128,5 @@ public class MediaResourceTest {
     public void updateDisc() throws Exception {
 
     }
-
+*/
 }
