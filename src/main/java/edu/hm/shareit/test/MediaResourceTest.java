@@ -34,7 +34,7 @@ public class MediaResourceTest {
     static final String APP_URL = "/";
     static final int PORT = 8082;
     static final String WEBAPP_DIR = "./src/main/webapp/";
-    static final Server jetty = new Server(PORT);
+    Server jetty;
     static final JSONObject BOOK_JSON = new JSONObject();
     static final Client CLIENT = ClientBuilder.newClient();
     static final WebTarget BOOK_TARGET = CLIENT.target("http://localhost:8082").path("shareit/media/books");
@@ -44,7 +44,7 @@ public class MediaResourceTest {
         BOOK_JSON.put("title", BOOK.getTitle());
         BOOK_JSON.put("author", BOOK.getAuthor());
         BOOK_JSON.put("isbn", BOOK.getIsbn());
-
+        jetty = new Server(PORT);
         jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
         jetty.start();
         System.out.println("Jetty listening on port " + PORT);
@@ -55,6 +55,8 @@ public class MediaResourceTest {
     @After
     public void tearDown() throws Exception {
         jetty.stop();
+        jetty.join();
+        //jetty.destroy();
     }
 
     private void reset() throws Exception {
