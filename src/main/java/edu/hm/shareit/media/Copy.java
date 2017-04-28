@@ -14,6 +14,9 @@ public class Copy {
      * @param owner The owner
      */
     public Copy(Medium medium, String owner) {
+        if(medium == null || owner == null){
+            throw new NullPointerException();
+        }
         this.medium = medium;
         this.owner = owner;
     }
