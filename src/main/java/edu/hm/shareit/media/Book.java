@@ -63,13 +63,10 @@ public class Book extends Medium {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        if (!super.equals(o)) {
-            return false;
-        }
 
         Book book = (Book) o;
 
-        return getIsbn().equals(book.getIsbn());
+        return this.getIsbn().equals(book.getIsbn());
     }
 
     @Override

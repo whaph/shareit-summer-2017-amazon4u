@@ -11,8 +11,8 @@ import java.util.HashSet;
  * Created by jupiter on 4/19/17.
  */
 public class MediaServiceImplementation implements MediaService {
-    private static final Collection<Book> BOOKS = new HashSet<>();
-    private static final Collection<Disc> DISCS = new HashSet<>();
+    private final Collection<Book> BOOKS = new HashSet<>();
+    private final Collection<Disc> DISCS = new HashSet<>();
 
     @Override
     public MediaServiceResult addBook(Book book) {
