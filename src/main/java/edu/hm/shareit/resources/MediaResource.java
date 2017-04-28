@@ -77,6 +77,7 @@ public class MediaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBook(@PathParam("isbn") String isbn) {
         final Medium book = getMediaService().getBook(isbn);
+        System.out.println(book);
         return book != null
                 ? Response.ok().entity(book).build()
                 : MediaServiceResult.NOT_FOUND.getResponse();
