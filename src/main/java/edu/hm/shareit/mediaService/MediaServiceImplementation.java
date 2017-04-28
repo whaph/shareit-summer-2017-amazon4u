@@ -6,6 +6,9 @@ import edu.hm.shareit.media.Medium;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Created by jupiter on 4/19/17.
@@ -50,13 +53,13 @@ public class MediaServiceImplementation implements MediaService {
         }
 
         if (disc.getDirector() == "" || disc.getTitle() == "") {
-            System.out.println("MediaServiceResult >>> addBook() -> director or title missing");
+            System.out.println("MediaServiceResult >>> addDisc() -> director or title missing");
             return MediaServiceResult.MISSING_ARG;
         }
 
         if (!isValidBarcode(disc.getBarcode())) {
-            System.out.println("MediaServiceResult >>> addBook() -> Illegal ISBN");
-            return MediaServiceResult.ILLEGAL_ISBN;
+            System.out.println("MediaServiceResult >>> addDisc() -> Illegal Barcode");
+            return MediaServiceResult.ILLEGAL_BARCODE;
         }
 
         if (getDiscsCollection().contains(disc)) {
@@ -90,7 +93,7 @@ public class MediaServiceImplementation implements MediaService {
         Disc toBeUpdated = (Disc) getDisc(disc.getBarcode());
 
         if (toBeUpdated == null) {
-            return MediaServiceResult.UNMATCHING_ISBN;
+            return MediaServiceResult.UNMATCHING_BARCODE;
         }
         toBeUpdated.setTitle(disc.getTitle());
         toBeUpdated.setDirector(disc.getDirector());
@@ -110,20 +113,26 @@ public class MediaServiceImplementation implements MediaService {
 
     @Override
     public Medium getBook(String isbn) {
-        for (Book book : getBooksCollection()) {
-            if (book.getIsbn().equals(isbn)) {
-                return book;
-            }
+        Supplier<Optional<Book>> supplier = () -> getBooksCollection()
+                .parallelStream()
+                .filter(book ->  book.getIsbn().equals(isbn))
+                .findFirst();
+
+        if(supplier.get().isPresent()){
+            return supplier.get().get();
         }
         return null;
     }
 
     @Override
     public Medium getDisc(String barcode) {
-        for (Disc disc : getDiscsCollection()) {
-            if (disc.getBarcode().equals(barcode)) {
-                return disc;
-            }
+        Supplier<Optional<Disc>> supplier = () -> getDiscsCollection()
+                .parallelStream()
+                .filter(disc ->  disc.getBarcode().equals(barcode))
+                .findFirst();
+
+        if(supplier.get().isPresent()){
+            return supplier.get().get();
         }
         return null;
     }

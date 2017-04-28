@@ -1,118 +1,169 @@
 package edu.hm.shareit.test;
 
 import edu.hm.shareit.media.Book;
+import edu.hm.shareit.media.Disc;
 import edu.hm.shareit.media.Medium;
 import edu.hm.shareit.mediaService.MediaService;
 import edu.hm.shareit.mediaService.MediaServiceImplementation;
 import edu.hm.shareit.mediaService.MediaServiceResult;
-import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by jupiter on 4/28/17.
  */
 public class MediaServiceImplementationTest {
-    static final Book book = new Book("title","author","978-3551551672");
+    static final Book BOOK = new Book("title", "author", "978-3551551672");
+    static final Disc DISC = new Disc("Never gonna give you up", "Rick Astley", "1111111111111", 0);
 
     @Test
     public void addNewBook() throws Exception {
         MediaService sut = new MediaServiceImplementation();
         MediaServiceResult wanted = MediaServiceResult.OK;
-        MediaServiceResult have = sut.addBook(book);
-        assertEquals(wanted,have);
+        MediaServiceResult have = sut.addBook(BOOK);
+        assertEquals(wanted, have);
     }
 
     @Test
     public void addExistingBook() throws Exception {
         MediaService sut = new MediaServiceImplementation();
         MediaServiceResult wanted = MediaServiceResult.ALREADY_EXISTS;
-        sut.addBook(book);
-        MediaServiceResult have = sut.addBook(book);
-        assertEquals(wanted,have);
+        sut.addBook(BOOK);
+        MediaServiceResult have = sut.addBook(BOOK);
+        assertEquals(wanted, have);
     }
 
     @Test
     public void addBookInvalidISBN() throws Exception {
         MediaService sut = new MediaServiceImplementation();
         MediaServiceResult wanted = MediaServiceResult.ILLEGAL_ISBN;
-        MediaServiceResult have = sut.addBook(new Book("title","author","345345003"));
-        assertEquals(wanted,have);
+        MediaServiceResult have = sut.addBook(new Book("title", "author", "345345003"));
+        assertEquals(wanted, have);
     }
 
     @Test
     public void getBook() throws Exception {
         MediaService sut = new MediaServiceImplementation();
-        Book wanted = book;
-        sut.addBook(book);
-        Book have = (Book) sut.getBook(book.getIsbn());
-        assertEquals(wanted,have);
+        Book wanted = BOOK;
+        sut.addBook(BOOK);
+        Book have = (Book) sut.getBook(BOOK.getIsbn());
+        assertEquals(wanted, have);
     }
 
     @Test
     public void getBookNotFound() throws Exception {
         MediaService sut = new MediaServiceImplementation();
         Book wanted = null;
-        Book have = (Book) sut.getBook(book.getIsbn());
-        assertEquals(wanted,have);
+        Book have = (Book) sut.getBook(BOOK.getIsbn());
+        assertEquals(wanted, have);
     }
 
     @Test
     public void updateBook() throws Exception {
         MediaService sut = new MediaServiceImplementation();
-        sut.addBook(book);
-        Book wanted = new Book("newTitle","newAuthor",book.getIsbn());
+        sut.addBook(BOOK);
+        Book wanted = new Book("newTitle", "newAuthor", BOOK.getIsbn());
         sut.updateBook(wanted);
-        Book have = (Book) sut.getBook(book.getIsbn());
-        assertEquals(wanted,have);
+        Book have = (Book) sut.getBook(BOOK.getIsbn());
+        assertEquals(wanted, have);
     }
 
 
     @Test
     public void updateBookResultOK() throws Exception {
         MediaService sut = new MediaServiceImplementation();
-        sut.addBook(book);
-        Book newBook = new Book("newTitle","newAuthor",book.getIsbn());
+        sut.addBook(BOOK);
+        Book newBook = new Book("newTitle", "newAuthor", BOOK.getIsbn());
         sut.updateBook(newBook);
         MediaServiceResult wanted = MediaServiceResult.OK;
         MediaServiceResult have = sut.updateBook(newBook);
-        assertEquals(wanted,have);
+        assertEquals(wanted, have);
     }
 
     @Test
     public void getBooks() throws Exception {
         MediaService sut = new MediaServiceImplementation();
-        Book anotherBook = new Book("anotherTitle","anotherAuthor","978-3-551-55900-5");
-        sut.addBook(book);
+        Book anotherBook = new Book("anotherTitle", "anotherAuthor", "978-3-551-55900-5");
+        sut.addBook(BOOK);
         sut.addBook(anotherBook);
-        Medium[] wanted = {anotherBook,book}; // in this order, because it is sorted
+        Medium[] wanted = {anotherBook, BOOK}; // in this order, because it is sorted
         Medium[] have = sut.getBooks();
-        assertArrayEquals(wanted,have);
+        assertArrayEquals(wanted, have);
     }
-
 
     @Test
-    public void addDisc() throws Exception {
-
+    public void addNewDisc() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult wanted = MediaServiceResult.OK;
+        MediaServiceResult have = sut.addDisc(DISC);
+        assertEquals(wanted, have);
     }
-
-
 
     @Test
-    public void updateDisc() throws Exception {
-
+    public void addExistingDisc() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult wanted = MediaServiceResult.ALREADY_EXISTS;
+        sut.addDisc(DISC);
+        MediaServiceResult have = sut.addDisc(DISC);
+        assertEquals(wanted, have);
     }
-
 
     @Test
-    public void getDiscs() throws Exception {
-
+    public void addDiscInvalidBarcode() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult wanted = MediaServiceResult.ILLEGAL_BARCODE;
+        MediaServiceResult have = sut.addDisc(new Disc("title", "Astley", "111", 0));
+        assertEquals(wanted, have);
     }
-
 
     @Test
     public void getDisc() throws Exception {
-
+        MediaService sut = new MediaServiceImplementation();
+        Disc wanted = DISC;
+        sut.addDisc(DISC);
+        Disc have = (Disc) sut.getDisc(DISC.getBarcode());
+        assertEquals(wanted, have);
     }
 
+    @Test
+    public void getDiscNotFound() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        Disc wanted = null;
+        Disc have = (Disc) sut.getDisc(DISC.getBarcode());
+        assertEquals(wanted, have);
+    }
+
+    @Test
+    public void updateDisc() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        sut.addDisc(DISC);
+        Disc wanted = new Disc("newTitle", "Astley", DISC.getBarcode(), 0);
+        sut.updateDisc(wanted);
+        Disc have = (Disc) sut.getDisc(DISC.getBarcode());
+        assertEquals(wanted, have);
+    }
+
+    @Test
+    public void updateDiscResultOK() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        sut.addDisc(DISC);
+        Disc newDisc = new Disc("newTitle", "Astley", DISC.getBarcode(), 18);
+        sut.updateDisc(newDisc);
+        MediaServiceResult wanted = MediaServiceResult.OK;
+        MediaServiceResult have = sut.updateDisc(newDisc);
+        assertEquals(wanted, have);
+    }
+
+    @Test
+    public void getDiscs() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        Disc anotherDisc = new Disc("anotherTitle", "Astley", "2222222222222", 0);
+        sut.addDisc(DISC);
+        sut.addDisc(anotherDisc);
+        Medium[] wanted = {anotherDisc, DISC}; // in this order, because it is sorted
+        Medium[] have = sut.getDiscs();
+        assertArrayEquals(wanted, have);
+    }
 }
