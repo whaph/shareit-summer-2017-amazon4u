@@ -18,7 +18,7 @@ import java.util.Arrays;
  */
 @Path("media")
 public class MediaResource {
-    private static final MediaService MEDIA_SERVICE = new MediaServiceImplementation();
+    private static MediaService MEDIA_SERVICE = new MediaServiceImplementation();
 
     /**
      * Creates a book (not an exemplar).
@@ -151,6 +151,12 @@ public class MediaResource {
         MediaServiceResult msr = getMediaService()
                 .updateDisc(new Disc(disc.getTitle(), barcode, disc.getDirector(), disc.getFsk()));
         return msr.getResponse();
+    }
+
+    @DELETE
+    @Path("purge")
+    public void purge() {
+       this.MEDIA_SERVICE = new MediaServiceImplementation();
     }
 
     /**
