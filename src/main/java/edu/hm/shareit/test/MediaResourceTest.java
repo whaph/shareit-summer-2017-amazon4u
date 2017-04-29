@@ -94,8 +94,10 @@ public class MediaResourceTest {
 
     @Test
     public void createBookStatus() throws Exception {
+        System.out.println("Before");
         System.out.println(BOOK_STACK);
         Book book = BOOK_STACK.pop();
+        System.out.println("After");
         System.out.println(BOOK_STACK);
         System.out.println(book.getIsbn());
         Response want = Response.ok().build();
@@ -107,8 +109,10 @@ public class MediaResourceTest {
 
     @Test
     public void getBooks() throws Exception {
+        System.out.println("Before");
         System.out.println(BOOK_STACK);
         Book book = BOOK_STACK.pop();
+        System.out.println("After");
         System.out.println(BOOK_STACK);
         Response want = Response.ok().entity(book).build();
         Response have = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(book, MediaType.APPLICATION_JSON_TYPE));
