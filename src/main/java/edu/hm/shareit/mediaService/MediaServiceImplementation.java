@@ -90,7 +90,6 @@ public class MediaServiceImplementation implements MediaService {
             return MediaServiceResult.FORBIDDEN;
         }
         Disc toBeUpdated = (Disc) getDisc(disc.getBarcode());
-        System.out.println("DISC: " + disc);
         if (toBeUpdated == null) {
             return MediaServiceResult.UNMATCHING_BARCODE;
         }
