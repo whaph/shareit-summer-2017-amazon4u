@@ -109,7 +109,9 @@ public class MediaResource {
     @Path("discs/{barcode}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDisc(@PathParam("barcode") String barcode) {
-        final Medium disc = getMediaService().getBook(barcode);
+        System.out.println("IN get disc");
+        final Medium disc = getMediaService().getDisc(barcode);
+        System.out.println(disc);
         return disc != null
                 ? Response.ok().entity(disc).build()
                 : MediaServiceResult.NOT_FOUND.getResponse();

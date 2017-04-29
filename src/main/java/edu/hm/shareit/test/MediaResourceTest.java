@@ -2,6 +2,7 @@ package edu.hm.shareit.test;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
 import org.eclipse.jetty.server.Server;
@@ -155,7 +156,7 @@ public class MediaResourceTest {
     public void getDiscCompareStatus() throws Exception {
         reset();
         DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(DISC,MediaType.APPLICATION_JSON_TYPE));
-        Response want = Response.ok().entity(BOOK).build();
+        Response want = Response.ok().entity(DISC).build();
         Response have = DISC_TARGET.path(DISC.getBarcode()).request(MediaType.APPLICATION_JSON_TYPE).get();
         assertEquals(want.getStatus(),have.getStatus());
     }

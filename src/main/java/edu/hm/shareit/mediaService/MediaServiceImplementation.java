@@ -129,7 +129,6 @@ public class MediaServiceImplementation implements MediaService {
                 .parallelStream()
                 .filter(disc -> disc.getBarcode().equals(barcode))
                 .findFirst();
-
         if (supplier.get().isPresent()) {
             return supplier.get().get();
         }
