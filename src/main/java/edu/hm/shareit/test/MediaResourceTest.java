@@ -1,6 +1,7 @@
 package edu.hm.shareit.test;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
 import org.eclipse.jetty.server.Server;
@@ -91,20 +92,103 @@ public class MediaResourceTest {
         JETTY.stop();
     }
 
+    private void reset() throws Exception {
+        tearDown();
+        setUp();
+    }
+
+    private String convertToJson(Object object) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(object);
+        } catch (Exception e) {
+            System.out.println("Error");
+            return "";
+        }
+    }
+
 
     @Test
     public void createBookStatus() throws Exception {
-        System.out.println("Before");
-        System.out.println(BOOK_STACK);
-        Book book = BOOK_STACK.pop();
-        System.out.println("After");
-        System.out.println(BOOK_STACK);
-        System.out.println(book.getIsbn());
+        reset();
         Response want = Response.ok().build();
-        Response have = BOOK_TARGET
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(book, MediaType.APPLICATION_JSON_TYPE));
-        assertEquals(want.getStatus(), have.getStatus());
+        Response have = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(BOOK_STACK.pop(),MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(want.getStatus(),have.getStatus());
+    }
+
+    @Test
+    public void getBookCompareStatus() throws Exception {
+        reset();
+        final Book book = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(book,MediaType.APPLICATION_JSON_TYPE));
+        Response want = Response.ok().entity(book).build();
+        Response have = BOOK_TARGET.path("978-3551551672").request(MediaType.APPLICATION_JSON_TYPE).get();
+        assertEquals(want.getStatus(),have.getStatus());
+    }
+
+    @Test
+    public void getBookCompareJson() throws Exception {
+        reset();
+        final Book book = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(book,MediaType.APPLICATION_JSON_TYPE));
+        String want = convertToJson(book);
+        Response response = BOOK_TARGET.path(book.getIsbn()).request(MediaType.APPLICATION_JSON_TYPE).get();
+        String have = response.readEntity(String.class);
+        assertEquals(want,have);
+    }
+
+    @Test
+    public void getBooksCompareJson() throws Exception {
+        reset();
+        final Book book = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(book,MediaType.APPLICATION_JSON_TYPE));
+        final Book anotherBook = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(anotherBook,MediaType.APPLICATION_JSON_TYPE));
+        String want = convertToJson(new Book[]{anotherBook,book});
+        Response response = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).get();
+        String have = response.readEntity(String.class);
+        assertEquals(want,have);
+    }
+
+    @Test
+    public void getBooksCompareStatus() throws Exception {
+        reset();
+        final Book book = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(book,MediaType.APPLICATION_JSON_TYPE));
+        final Book anotherBook = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(anotherBook,MediaType.APPLICATION_JSON_TYPE));
+        Response want = Response.ok().entity(book).build();
+        Response have = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).get();
+        assertEquals(want.getStatus(),have.getStatus());
+    }
+
+    @Test
+    public void updateBookCompareStatus() throws Exception {
+        reset();
+        final Book book = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(book,MediaType.APPLICATION_JSON_TYPE));
+        final Book anotherBook = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(anotherBook,MediaType.APPLICATION_JSON_TYPE));
+        Response want = Response.ok().entity(book).build();
+        Response have = BOOK_TARGET.path(book.getIsbn()).request(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.entity(new Book("Rick","Roll",book.getIsbn()),MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(want.getStatus(),have.getStatus());
+    }
+
+    @Test
+    public void updateBookCompareJson() throws Exception {
+        reset();
+        final Book book = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(book,MediaType.APPLICATION_JSON_TYPE));
+        final Book anotherBook = BOOK_STACK.pop();
+        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(anotherBook,MediaType.APPLICATION_JSON_TYPE));
+        Book toBeUpdated = new Book("Rick","Roll",book.getIsbn());
+        String want = convertToJson(new Book[]{toBeUpdated,anotherBook});
+        BOOK_TARGET.path(book.getIsbn()).request(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.entity(toBeUpdated,MediaType.APPLICATION_JSON_TYPE));
+        Response response = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).get();
+        String have = response.readEntity(String.class);
+        assertEquals(want,have);
     }
 
     @Test
