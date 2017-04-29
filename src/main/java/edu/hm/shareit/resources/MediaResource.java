@@ -153,6 +153,9 @@ public class MediaResource {
         return msr.getResponse();
     }
 
+    /**
+     * Purge all existing data.
+     */
     @DELETE
     public void purge() {
        this.MEDIA_SERVICE = new MediaServiceImplementation();
