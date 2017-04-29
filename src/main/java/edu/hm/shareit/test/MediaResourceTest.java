@@ -30,7 +30,8 @@ import static org.junit.Assert.*;
 public class MediaResourceTest {
     static final Book BOOK = new Book("title","author","978-3551551672");
     static final Book ANOTHER_BOOK = new Book("first","author2","978-3551551689");
-    static final Disc DISC = new Disc("title","director","079879",0);
+    static final Disc DISC = new Disc("title","director","1111111111111",0);
+    static final Disc ANOTHER_DISC = new Disc("anotherTitle", "anotherAuthor", "2222222222222", 6);
     static final String APP_URL = "/";
     static final int PORT = 8082;
     static final String WEBAPP_DIR = "./src/main/webapp/";
@@ -38,6 +39,7 @@ public class MediaResourceTest {
     static final JSONObject BOOK_JSON = new JSONObject();
     static final Client CLIENT = ClientBuilder.newClient();
     static final WebTarget BOOK_TARGET = CLIENT.target("http://localhost:8082").path("shareit/media/books");
+    static final WebTarget DISC_TARGET = CLIENT.target("http://localhost:8082").path("shareit/media/discs");
 
     @Before
     public void setUp() throws Exception {
@@ -105,17 +107,6 @@ public class MediaResourceTest {
     }
 
     @Test
-    public void getBooksCompareJson() throws Exception {
-        reset();
-        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(BOOK,MediaType.APPLICATION_JSON_TYPE));
-        BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(ANOTHER_BOOK,MediaType.APPLICATION_JSON_TYPE));
-        String want = convertToJson(new Book[]{ANOTHER_BOOK,BOOK});
-        Response response = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).get();
-        String have = response.readEntity(String.class);
-        assertEquals(want,have);
-    }
-
-    @Test
     public void getBooksCompareStatus() throws Exception {
         reset();
         BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(BOOK,MediaType.APPLICATION_JSON_TYPE));
@@ -150,25 +141,69 @@ public class MediaResourceTest {
         assertEquals(want,have);
     }
 
-    /*
-    //@Test
-    public void createDisc() throws Exception {
-        MediaResource mediaResource = new MediaResource();
-        Response wanted = MediaServiceResult.OK.getResponse();
-        Response have = mediaResource.createBook(BOOK);
-        assertEquals(wanted,have);
-    }
+    // ----------------------------------------------------------------------
+
+
     @Test
-    public void getDiscs() throws Exception {
+    public void createDiscStatus() throws Exception {
+        reset();
+        Response want = Response.ok().build();
+        Response have = DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(DISC,MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(want.getStatus(),have.getStatus());
     }
+
     @Test
-    public void getDisc() throws Exception {
+    public void getDiscCompareStatus() throws Exception {
+        reset();
+        DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(DISC,MediaType.APPLICATION_JSON_TYPE));
+        Response want = Response.ok().entity(BOOK).build();
+        Response have = DISC_TARGET.path(DISC.getBarcode()).request(MediaType.APPLICATION_JSON_TYPE).get();
+        assertEquals(want.getStatus(),have.getStatus());
     }
+
     @Test
-    public void updateBook() throws Exception {
+    public void getDiscCompareJson() throws Exception {
+        reset();
+        DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(DISC,MediaType.APPLICATION_JSON_TYPE));
+        String want = convertToJson(DISC);
+        Response response = DISC_TARGET.path(DISC.getBarcode()).request(MediaType.APPLICATION_JSON_TYPE).get();
+        String have = response.readEntity(String.class);
+        assertEquals(want,have);
     }
+
     @Test
-    public void updateDisc() throws Exception {
+    public void getDiscsCompareJson() throws Exception {
+        reset();
+        DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(DISC,MediaType.APPLICATION_JSON_TYPE));
+        DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(ANOTHER_DISC,MediaType.APPLICATION_JSON_TYPE));
+        String want = convertToJson(new Disc[]{ANOTHER_DISC,DISC});
+        Response response = DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).get();
+        String have = response.readEntity(String.class);
+        assertEquals(want,have);
     }
-*/
+
+    @Test
+    public void updateDiscCompareStatus() throws Exception {
+        reset();
+        DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(DISC,MediaType.APPLICATION_JSON_TYPE));
+        DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(ANOTHER_DISC,MediaType.APPLICATION_JSON_TYPE));
+        Response want = Response.ok().entity(DISC).build();
+        Response have = DISC_TARGET.path(DISC.getBarcode()).request(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.entity(new Disc("Rick","Roll",DISC.getBarcode(),0),MediaType.APPLICATION_JSON_TYPE));
+        assertEquals(want.getStatus(),have.getStatus());
+    }
+
+    @Test
+    public void updateDiscCompareJson() throws Exception {
+        reset();
+        DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(DISC,MediaType.APPLICATION_JSON_TYPE));
+        DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(ANOTHER_DISC,MediaType.APPLICATION_JSON_TYPE));
+        Disc toBeUpdated = new Disc("Rick","Roll",DISC.getBarcode(), 0);
+        String want = convertToJson(new Disc[]{toBeUpdated,ANOTHER_DISC});
+        DISC_TARGET.path(DISC.getBarcode()).request(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.entity(toBeUpdated,MediaType.APPLICATION_JSON_TYPE));
+        Response response = DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).get();
+        String have = response.readEntity(String.class);
+        assertEquals(want,have);
+    }
 }
