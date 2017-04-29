@@ -8,14 +8,13 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 /**
  * Created by jupiter on 4/19/17.
  */
 public class MediaServiceImplementation implements MediaService {
-    private final Collection<Book> BOOKS = new HashSet<>();
-    private final Collection<Disc> DISCS = new HashSet<>();
+    private final Collection<Book> books = new HashSet<>();
+    private final Collection<Disc> discs = new HashSet<>();
 
     @Override
     public MediaServiceResult addBook(Book book) {
@@ -115,10 +114,10 @@ public class MediaServiceImplementation implements MediaService {
     public Medium getBook(String isbn) {
         Supplier<Optional<Book>> supplier = () -> getBooksCollection()
                 .parallelStream()
-                .filter(book ->  book.getIsbn().equals(isbn))
+                .filter(book -> book.getIsbn().equals(isbn))
                 .findFirst();
 
-        if(supplier.get().isPresent()){
+        if (supplier.get().isPresent()) {
             return supplier.get().get();
         }
         return null;
@@ -128,10 +127,10 @@ public class MediaServiceImplementation implements MediaService {
     public Medium getDisc(String barcode) {
         Supplier<Optional<Disc>> supplier = () -> getDiscsCollection()
                 .parallelStream()
-                .filter(disc ->  disc.getBarcode().equals(barcode))
+                .filter(disc -> disc.getBarcode().equals(barcode))
                 .findFirst();
 
-        if(supplier.get().isPresent()){
+        if (supplier.get().isPresent()) {
             return supplier.get().get();
         }
         return null;
@@ -142,8 +141,8 @@ public class MediaServiceImplementation implements MediaService {
      *
      * @return The books.
      */
-    private Collection<Book> getBooksCollection() {
-        return BOOKS;
+    protected Collection<Book> getBooksCollection() {
+        return books;
     }
 
     /**
@@ -151,8 +150,8 @@ public class MediaServiceImplementation implements MediaService {
      *
      * @return The discs
      */
-    private Collection<Disc> getDiscsCollection() {
-        return DISCS;
+    protected Collection<Disc> getDiscsCollection() {
+        return discs;
     }
 
     /**
