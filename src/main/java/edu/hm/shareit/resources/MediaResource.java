@@ -149,7 +149,7 @@ public class MediaResource {
         System.out.println("MediaResource >>> updateDisc >> Barcode: " + barcode);
         System.out.println("MediaResource >>> new Director, Fsk and title: " + disc.getDirector() + disc.getFsk() + disc.getTitle());
         MediaServiceResult msr = getMediaService()
-                .updateDisc(new Disc(disc.getTitle(), barcode, disc.getDirector(), disc.getFsk()));
+                .updateDisc(new Disc(disc.getTitle(), disc.getDirector(), barcode, disc.getFsk()));
         return msr.getResponse();
     }
 
