@@ -166,4 +166,25 @@ public class MediaServiceImplementationTest {
         Medium[] have = sut.getDiscs();
         assertArrayEquals(wanted, have);
     }
+
+
+    @Test
+    public void addNullBook() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult have = sut.addBook(null);
+        MediaServiceResult want = MediaServiceResult.FORBIDDEN;
+        assertEquals(want,have);
+    }
+
+    @Test
+    public void addNullDisc() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult have = sut.addDisc(null);
+        MediaServiceResult want = MediaServiceResult.FORBIDDEN;
+        assertEquals(want,have);
+    }
+
+
+
+
 }
