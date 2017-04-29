@@ -22,7 +22,7 @@ public class MediaServiceImplementation implements MediaService {
             return MediaServiceResult.FORBIDDEN;
         }
 
-        if (book.getAuthor() == "" || book.getTitle() == "") {
+        if (book.getAuthor().equals("") || book.getTitle().equals("")) {
             System.out.println("MediaServiceResult >>> addBook() -> author or title missing");
             return MediaServiceResult.MISSING_ARG;
         }
@@ -51,7 +51,7 @@ public class MediaServiceImplementation implements MediaService {
             return MediaServiceResult.FORBIDDEN;
         }
 
-        if (disc.getDirector() == "" || disc.getTitle() == "") {
+        if (disc.getDirector().equals("") || disc.getTitle().equals("")) {
             System.out.println("MediaServiceResult >>> addDisc() -> director or title missing");
             return MediaServiceResult.MISSING_ARG;
         }
@@ -90,13 +90,14 @@ public class MediaServiceImplementation implements MediaService {
             return MediaServiceResult.FORBIDDEN;
         }
         Disc toBeUpdated = (Disc) getDisc(disc.getBarcode());
-
+        System.out.println("DISC: " + disc);
         if (toBeUpdated == null) {
             return MediaServiceResult.UNMATCHING_BARCODE;
         }
         toBeUpdated.setTitle(disc.getTitle());
         toBeUpdated.setDirector(disc.getDirector());
         toBeUpdated.setFsk(disc.getFsk());
+
         return MediaServiceResult.OK;
     }
 

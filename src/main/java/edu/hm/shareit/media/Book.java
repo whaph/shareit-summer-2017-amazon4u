@@ -10,7 +10,7 @@ public class Book extends Medium {
     /**
      * Default constructor for Jackson
      */
-    private Book() {
+    public Book() {
         this("empty", "empty", "empty");
     }
 

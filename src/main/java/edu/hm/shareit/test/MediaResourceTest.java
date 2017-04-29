@@ -53,7 +53,6 @@ public class MediaResourceTest {
         //jetty.join();
     }
 
-
     @After
     public void tearDown() throws Exception {
         jetty.stop();
@@ -204,6 +203,7 @@ public class MediaResourceTest {
                 .put(Entity.entity(toBeUpdated,MediaType.APPLICATION_JSON_TYPE));
         Response response = DISC_TARGET.request(MediaType.APPLICATION_JSON_TYPE).get();
         String have = response.readEntity(String.class);
+        System.out.println(have);
         assertEquals(want,have);
     }
 }
