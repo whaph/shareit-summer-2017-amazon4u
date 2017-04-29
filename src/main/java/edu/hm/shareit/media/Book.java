@@ -75,4 +75,12 @@ public class Book extends Medium {
     public int hashCode() {
         return getIsbn().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "author='" + author + '\'' +
+                ", isbn='" + isbn + '\'' +
+                '}';
+    }
 }

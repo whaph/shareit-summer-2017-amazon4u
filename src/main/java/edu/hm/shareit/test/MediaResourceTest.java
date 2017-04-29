@@ -88,14 +88,16 @@ public class MediaResourceTest {
 
     @After
     public void tearDown() throws Exception {
-
         JETTY.stop();
     }
 
 
     @Test
     public void createBookStatus() throws Exception {
+        System.out.println(BOOK_STACK);
         Book book = BOOK_STACK.pop();
+        System.out.println(BOOK_STACK);
+        System.out.println(book.getIsbn());
         Response want = Response.ok().build();
         Response have = BOOK_TARGET
                 .request(MediaType.APPLICATION_JSON_TYPE)
@@ -105,11 +107,11 @@ public class MediaResourceTest {
 
     @Test
     public void getBooks() throws Exception {
+        System.out.println(BOOK_STACK);
         Book book = BOOK_STACK.pop();
+        System.out.println(BOOK_STACK);
         Response want = Response.ok().entity(book).build();
-        System.out.println(want);
         Response have = BOOK_TARGET.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(book, MediaType.APPLICATION_JSON_TYPE));
-        System.out.println(have);
         assertEquals(want.getStatus(), have.getStatus());
     }
 

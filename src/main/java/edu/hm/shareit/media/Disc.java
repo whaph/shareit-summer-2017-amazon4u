@@ -95,4 +95,13 @@ public class Disc extends Medium {
     public int hashCode() {
         return getBarcode().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "Disc{" +
+                "barcode='" + barcode + '\'' +
+                ", director='" + director + '\'' +
+                ", fsk=" + fsk +
+                '}';
+    }
 }

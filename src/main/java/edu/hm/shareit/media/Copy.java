@@ -36,4 +36,12 @@ public class Copy {
     public String getOwner() {
         return owner;
     }
+
+    @Override
+    public String toString() {
+        return "Copy{" +
+                "medium=" + medium +
+                ", owner='" + owner + '\'' +
+                '}';
+    }
 }
