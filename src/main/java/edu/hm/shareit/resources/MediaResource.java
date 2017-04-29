@@ -154,9 +154,9 @@ public class MediaResource {
     }
 
     @DELETE
-    @Path("purge")
     public void purge() {
        this.MEDIA_SERVICE = new MediaServiceImplementation();
+        System.out.println("PURGE ALL");
     }
 
     /**
