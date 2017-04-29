@@ -185,6 +185,52 @@ public class MediaServiceImplementationTest {
     }
 
 
+    @Test
+    public void addBookWithNoAuthor () throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult have = sut.addBook(new Book("asdf", "", BOOK.getIsbn()));
+        MediaServiceResult want = MediaServiceResult.MISSING_ARG;
+        assertEquals(want,have);
+    }
 
+    @Test
+    public void addBookWithNoTitle () throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult have = sut.addBook(new Book("", "asdf", BOOK.getIsbn()));
+        MediaServiceResult want = MediaServiceResult.MISSING_ARG;
+        assertEquals(want,have);
+    }
+
+    @Test
+    public void addDiscWithNoDirecotr() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult have = sut.addDisc(new Disc("asdf", "", DISC.getBarcode(), 0));
+        MediaServiceResult want = MediaServiceResult.MISSING_ARG;
+        assertEquals(want,have);
+    }
+
+    @Test
+    public void addDiscWithNoTitle() throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult have = sut.addDisc(new Disc("", "asdf", DISC.getBarcode(), 0));
+        MediaServiceResult want = MediaServiceResult.MISSING_ARG;
+        assertEquals(want,have);
+    }
+
+    @Test
+    public void addBookWithIllegalIsbn () throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult have = sut.addBook(new Book("fss", "asdf", "asdfasd"));
+        MediaServiceResult want = MediaServiceResult.ILLEGAL_ISBN;
+        assertEquals(want,have);
+    }
+
+    @Test
+    public void addDiscWithIllegalBarcode () throws Exception {
+        MediaService sut = new MediaServiceImplementation();
+        MediaServiceResult have = sut.addDisc(new Disc("fss", "asdf", "asdfasd", 0));
+        MediaServiceResult want = MediaServiceResult.ILLEGAL_BARCODE;
+        assertEquals(want,have);
+    }
 
 }
