@@ -44,6 +44,7 @@
 	    <version>2.6.1</version>
 	</dependency>
   </dependencies>
+
   <build>
     <finalName>shareit</finalName>
     <sourceDirectory>src/main/java</sourceDirectory>
