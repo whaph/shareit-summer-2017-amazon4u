@@ -25,9 +25,7 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by jupiter on 4/28/17.
- */
+
 public class MediaResourceTest {
     static final Book BOOK = new Book("title","author","978-3551551672");
     static final Book ANOTHER_BOOK = new Book("first","author2","978-3551551689");

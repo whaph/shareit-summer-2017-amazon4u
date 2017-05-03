@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * Created by jupiter on 4/19/17.
+ * The implementation of the MediaService interface.
  */
 public class MediaServiceImplementation implements MediaService {
     private final Collection<Book> books = new HashSet<>();

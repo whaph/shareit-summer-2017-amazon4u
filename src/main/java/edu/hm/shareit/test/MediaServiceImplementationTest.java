@@ -11,9 +11,6 @@ import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by jupiter on 4/28/17.
- */
 public class MediaServiceImplementationTest {
     static final Book BOOK = new Book("title", "author", "978-3551551672");
     static final Disc DISC = new Disc("Never gonna give you up", "Rick Astley", "1111111111111", 0);

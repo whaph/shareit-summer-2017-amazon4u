@@ -13,12 +13,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
 
-/**
- * Created by jupiter on 4/19/17.
+/** Web interface of application.
+ *
  */
 @Path("media")
 public class MediaResource {
-    private static MediaService MEDIA_SERVICE = new MediaServiceImplementation();
+    private static MediaService mediaService = new MediaServiceImplementation();
 
     /**
      * Creates a book (not an exemplar).
@@ -160,7 +160,7 @@ public class MediaResource {
      */
     @DELETE
     public void purge() {
-       this.MEDIA_SERVICE = new MediaServiceImplementation();
+       this.mediaService = new MediaServiceImplementation();
         System.out.println("PURGE ALL");
     }
 
@@ -186,6 +186,6 @@ public class MediaResource {
      * @return mediaSerive
      */
     private MediaService getMediaService() {
-        return MEDIA_SERVICE;
+        return mediaService;
     }
 }

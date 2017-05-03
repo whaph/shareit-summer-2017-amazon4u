@@ -18,29 +18,33 @@ public class Disc extends Medium {
     private int fsk;
 
     /**
-     *  <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Click me</a>
+     * <a href="https://www.youtube.com/watch?v=oHg5SJYRHA0">Click me</a>
      */
     private Disc() {
         this("Never gonna", "give you", "up", 0);
     }
 
-    /** Creates a representation of a disc.
+    /**
+     * Creates a representation of a disc.
      * Not to be mistaken as an exemplar of the disc.
-     * @param title Title of the disc
-     * @param barcode Barcode of the disc
+     *
+     * @param title    Title of the disc
+     * @param barcode  Barcode of the disc
      * @param director Director of the disc
-     * @param fsk FSK of the disc
+     * @param fsk      FSK of the disc
      */
     public Disc(String title, String director, String barcode, int fsk) {
         super(title);
-        if(barcode == null || director == null)
+        if (barcode == null || director == null) {
             throw new NullPointerException();
+        }
         this.barcode = barcode;
         this.director = director;
         this.fsk = fsk;
     }
 
-    /** Setter for fks.
+    /**
+     * Setter for fks.
      *
      * @param fsk The fsk.
      */
@@ -48,7 +52,8 @@ public class Disc extends Medium {
         this.fsk = fsk;
     }
 
-    /** Setter for director.
+    /**
+     * Setter for director.
      *
      * @param director The director
      */
@@ -56,21 +61,27 @@ public class Disc extends Medium {
         this.director = director;
     }
 
-    /** Getter for barcode.
+    /**
+     * Getter for barcode.
+     *
      * @return barcode
      */
     public String getBarcode() {
         return this.barcode;
     }
 
-    /** Getter for director.
+    /**
+     * Getter for director.
+     *
      * @return director
      */
     public String getDirector() {
         return director;
     }
 
-    /** Getter for fsk.
+    /**
+     * Getter for fsk.
+     *
      * @return fsk
      */
     public int getFsk() {
@@ -98,10 +109,10 @@ public class Disc extends Medium {
 
     @Override
     public String toString() {
-        return "Disc{" +
-                "barcode='" + barcode + '\'' +
-                ", director='" + director + '\'' +
-                ", fsk=" + fsk +
-                '}';
+        return "Disc{"
+                + "barcode='" + barcode + '\''
+                + ", director='" + director + '\''
+                + ", fsk=" + fsk
+                + '}';
     }
 }

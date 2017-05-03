@@ -1,14 +1,14 @@
 package edu.hm.shareit.media;
 
 /**
- * Created by jupiter on 4/19/17.
+ * A class for books.
  */
 public class Book extends Medium {
     private String author;
     private final String isbn;
 
     /**
-     * Default constructor for Jackson
+     * Default constructor for Jackson.
      */
     public Book() {
         this("empty", "empty", "empty");
@@ -24,13 +24,15 @@ public class Book extends Medium {
      */
     public Book(String title, String author, String isbn) {
         super(title);
-        if(author == null || isbn == null)
+        if (author == null || isbn == null) {
             throw new NullPointerException();
+        }
         this.author = author;
         this.isbn = isbn;
     }
 
-    /** Setter for author.
+    /**
+     * Setter for author.
      *
      * @param author The author
      */
@@ -78,9 +80,9 @@ public class Book extends Medium {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "author='" + author + '\'' +
-                ", isbn='" + isbn + '\'' +
-                '}';
+        return "Book{"
+                + "author='" + author + '\''
+                + ", isbn='" + isbn + '\''
+                + '}';
     }
 }

@@ -24,7 +24,9 @@ public abstract class Medium {
      * @param title The title of the medium
      */
     public Medium(String title) {
-        if(title == null){ throw new NullPointerException();}
+        if (title == null) {
+            throw new NullPointerException();
+        }
         this.title = title;
     }
 

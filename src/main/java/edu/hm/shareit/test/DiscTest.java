@@ -6,9 +6,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by jupiter on 4/29/17.
- */
 public class DiscTest {
 
     @Test
