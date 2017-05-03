@@ -29,6 +29,7 @@ public enum MediaServiceResult {
      *
      * @param status   The status of the result
      * @param response The response of the result that will be build
+     * @param detail A detailed explanation of the Response.
      */
     MediaServiceResult(Status status, Response.ResponseBuilder response, String detail) {
         this.status = status;
@@ -62,6 +63,11 @@ public enum MediaServiceResult {
         return getStatus().getStatusCode();
     }
 
+    /** Given a reason it will build an error message as JSON object.
+     *
+     * @param detail The reason why the error occured
+     * @return JSON object of the error message
+     */
     public Object reason(String detail) {
         return reason.reason(detail);
     }
