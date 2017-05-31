@@ -1,11 +1,22 @@
 package edu.hm.shareit.media;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * A class for books.
  */
+@Entity
+@Table(name = "TBooks")
 public class Book extends Medium {
-    private String author;
+
+    @Id
     private final String isbn;
+
+    @Column(name = "author", length = 42)
+    private String author;
 
     /**
      * Default constructor for Jackson.

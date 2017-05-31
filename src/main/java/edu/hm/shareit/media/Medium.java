@@ -1,13 +1,21 @@
 package edu.hm.shareit.media;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
 /**
  * Abstract class for media with title.
  */
-public abstract class Medium {
+
+@Entity
+@Table(name = "TMedia")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Medium implements Serializable {
 
     /**
      * Title of the medium.
      */
+    @Column(name = "title", length = 42)
     private String title;
 
     /**

@@ -1,28 +1,45 @@
 package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.hm.ShareitServletContextListener;
 import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
 import edu.hm.shareit.media.Medium;
 import edu.hm.shareit.mediaService.MediaService;
 import edu.hm.shareit.mediaService.MediaServiceImplementation;
 import edu.hm.shareit.mediaService.MediaServiceResult;
+import org.glassfish.hk2.api.ServiceLocator;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
+import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Arrays;
 
-/** Web interface of application.
- *
+/**
+ * Web interface of application.
  */
 @Path("media")
-public class MediaResource {
+public class MediaResource extends ResourceConfig {
     private static MediaService mediaService = new MediaServiceImplementation();
+
+    @Inject
+    public MediaResource(ServiceLocator serviceLocator) {
+        GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);
+        GuiceIntoHK2Bridge guiceBridge
+                = serviceLocator.getService(GuiceIntoHK2Bridge.class);
+        guiceBridge.bridgeGuiceInjector(
+                ShareitServletContextListener.getInjectorInstance());
+    }
+
 
     /**
      * Creates a book (not an exemplar).
      * REST interface: POST /media/books
+     *
      * @param book The book
      * @return Response success, failure, ...
      */
@@ -38,6 +55,7 @@ public class MediaResource {
     /**
      * Creates a disc (not an exemplar).
      * REST interface: POST /media/discs
+     *
      * @param disc The disc
      * @return Response success, failure, ...
      */
@@ -53,6 +71,7 @@ public class MediaResource {
     /**
      * Show all books.
      * REST interface: GET /media/books
+     *
      * @return The books
      */
     @GET
@@ -69,6 +88,7 @@ public class MediaResource {
     /**
      * Show the book having the isbn.
      * REST interface: GET /media/books/{isbn}
+     *
      * @param isbn Used to identify the book
      * @return The book
      */
@@ -86,6 +106,7 @@ public class MediaResource {
     /**
      * Show all discs.
      * REST interface: GET /media/discs/
+     *
      * @return The discs
      */
     @GET
@@ -102,6 +123,7 @@ public class MediaResource {
     /**
      * Show the disc having the barcode.
      * REST interface: GET /media/discs/{barcode}
+     *
      * @param barcode Used to identify the disc
      * @return The disc
      */
@@ -120,6 +142,7 @@ public class MediaResource {
     /**
      * Update a the book having the isbn.
      * REST interface: PUT /media/books/{isbn}
+     *
      * @param book The book-update
      * @param isbn Used to identify the book
      * @return Response success, failure, ...
@@ -139,6 +162,7 @@ public class MediaResource {
     /**
      * Update the disc having the barcode.
      * REST interface: PUT /media/discs/{barcode}
+     *
      * @param disc    The disc-update
      * @param barcode Used to identify the disc
      * @return Response success, failure, ...
@@ -160,7 +184,7 @@ public class MediaResource {
      */
     @DELETE
     public void purge() {
-       this.mediaService = new MediaServiceImplementation();
+        this.mediaService = new MediaServiceImplementation();
         System.out.println("PURGE ALL");
     }
 
