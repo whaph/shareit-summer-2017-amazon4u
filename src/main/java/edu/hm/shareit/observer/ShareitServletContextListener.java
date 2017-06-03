@@ -1,4 +1,4 @@
-package edu.hm;
+package edu.hm.shareit.observer;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

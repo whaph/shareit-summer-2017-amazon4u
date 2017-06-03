@@ -1,7 +1,7 @@
 package edu.hm.shareit.resources;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.hm.ShareitServletContextListener;
+import edu.hm.shareit.observer.ShareitServletContextListener;
 import edu.hm.shareit.media.Book;
 import edu.hm.shareit.media.Disc;
 import edu.hm.shareit.media.Medium;
